@@ -1,0 +1,32 @@
+.conteudo{
+    display: flex; /* Use display: flex para criar um layout flexível. */
+    flex-direction: column;
+}
+
+.card-preco{
+    height: 500px;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+h3{
+    font-size: 24px;
+}
+
+.botao-adicionar{
+    align-self: flex-end;
+}
+
+.btn-vejaAgora{
+    background-color: #d8b4f8;
+    min-width: 150px;
+    min-height: 50px;
+
+    &:hover{
+        color: #fec;
+        border-color: #d8b4f8;
+    }
+}

@@ -1,0 +1,44 @@
+<div class='main-content' style="background-color: #e48586;">
+    <div class='container-fluid'>
+        <div class="card" style="background-color: #ba6061">
+            <div class="content">
+
+                <section id="produto" *ngIf="caminhoImagem != null">
+                    <div class="row">
+                        <div class="col-md-8 left">
+                            <img [src]="caminhoImagem" [alt]="Imagem"
+                                style="width: 650px; height: 500px; margin-left: 100px; margin-top: 15px">
+                        </div>
+
+                        <section id="card-preco">
+                            <div class="card col-md-3 card-preco" style="background-color: #9e5455">
+                                <div class="content conteudo">
+                                    <div class="col-md-12" style="color: #FCBAAD">
+                                        <div class="row">
+                                            <h2 style="text-align: center;">{{produto.nome}}</h2>
+                                        </div>
+
+                                        <div class="row cold-md-12 text-center">
+                                            <h2>R$ {{produto.valor}}</h2>
+                                        </div>
+                                        <div class="row">
+                                            <h3>{{produto.descricao}}</h3>
+                                        </div>
+
+                                        <div class="row botao-adicionar">
+                                            <button type="button" (click)="adicionarAoCarrinho(produtoId)"
+                                                class="btn-vejaAgora btn btn-wd" style="min-width: 100%;">
+                                                <i class="pe-7s-cart"></i> Adicionar ao carrinho</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>

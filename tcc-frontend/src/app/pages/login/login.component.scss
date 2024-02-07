@@ -1,0 +1,32 @@
+.titulo{
+    color: #fec;
+    font-family: Rufina;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.label-login{
+    color: #fec;
+    font-family: Rufina;
+}
+
+.btn-vejaAgora{
+    background-color: #d8b4f8;
+    
+    &:hover{
+        color: #fec;
+        border-color: #d8b4f8;
+    }
+}
+
+.botao-visibilidade {
+    position: absolute;
+    top: 68%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
