@@ -1,0 +1,72 @@
+<div class='main-content' style="background-color: #E48586; padding-bottom: 10px">
+  <div class='container-fluid'>
+    <div class="card" style="background-color: #ba6061">
+      <div class="content">
+
+        <section id="carrinho">
+          <div class="row">
+
+            <section id="produtos">
+              <div class="col-md-8 left">
+                <table id='datatables' class='table table-striped table-no-bordered table-hover' cellspacing='0'>
+                  <thead>
+                    <tr>
+                      <th class="col-md-4" style="color: #FCBAAD">Nome</th>
+                      <th class="col-md-3" style="color: #FCBAAD">Valor</th>
+                      <th class="col-md-4" style="color: #FCBAAD">Descrição</th>
+                      <th class="col-md-1" style="color: #FCBAAD">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="dataTable.dataRows.length == 0" style="background-color: #9e5455">
+                      <td colspan="16" class="text-center" style="color: #FCBAAD">Nenhum produto adicionado ao carrinho.
+                      </td>
+                    </tr>
+
+                    <tr *ngFor="let data of dataTable.dataRows" style="background-color: #9e5455">
+                      <td style="color: #FCBAAD">{{data.nome}}</td>
+                      <td style="color: #FCBAAD">{{data.valor}}</td>
+                      <td style="color: #FCBAAD">{{data.descricao}}</td>
+
+                      <td>
+                        <a rel='tooltip' title='Tirar produto da lista' class='btn btn-danger btn-round'
+                          (click)="tirarProdutoLista(data.id)">
+                          <i class='fa fa-trash'></i>
+                        </a>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+
+            <section id="card-preco">
+              <div class="card col-md-3 card-preco" style="background-color: #9e5455">
+                <div class="content">
+                  <div class="col-md-12" style="color: #FCBAAD">
+                    <div class="row">
+                      <h1 style="text-align: center; width: 110%; font-size: 28px; padding-right: 22px">Valor total dos produtos:</h1>
+                    </div>
+                    <div class="row text-center">
+                      <h1>R$ {{ valorTotal }}</h1>
+                    </div>
+
+                    <div class="row botao-adicionar">
+                      <button type="button" class="btn-vejaAgora btn btn-wd" style="min-width: 100%;" (click)="setValorTotal()"
+                        [routerLink]="['/carrinho/finalizandoCompra']">
+                        Finalizar compra</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>

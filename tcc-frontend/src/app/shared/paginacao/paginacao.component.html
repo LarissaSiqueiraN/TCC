@@ -1,0 +1,30 @@
+<div *ngIf="paginacao" class="row  text-align">
+    <div class="col-md-7">
+        <ul *ngIf="paginacao != null" class="pagination pagination-no-border" style="width: 100%;">
+            <li *ngIf="paginacao.qtdPaginas > 1 && paginacao.paginaAtual > 1">
+                <a (click)="paginar(paginacao.paginaAtual - 1)" ><i class="fa fa-angle-double-left"></i></a>
+            </li>
+        
+            <li [ngClass]="{'active' : pagina == paginacao.paginaAtual}" [disabled]="pagina == paginacao.paginaAtual" *ngFor="let pagina of paginas" class="page-item">
+                <a mat-button (click)="paginar(pagina)" class="page-link btn-round">{{pagina}}</a>
+            </li>
+        
+            <li *ngIf="paginacao.qtdPaginas >= 1 && paginacao.paginaAtual < paginacao.qtdPaginas">
+                <a (click)="paginar(paginacao.paginaAtual + 1)"><i class="fa fa-angle-double-right"></i></a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-3 text-right" *ngIf="!ocultarQuantidadeItens">
+        <span style="color: #fec">Quantidade de itens:  </span>
+        <select (change)="alterarItensPagina($event.target.value)" style="width: 45px; height: 25px;">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+        </select> 
+    </div>
+    <div *ngIf="!ocultarTotalRegistros" class="text-right" [ngClass]="{'col-md-2': !ocultarQuantidadeItens, 'col-md-5': ocultarQuantidadeItens}">
+        <span style="color: #fec">Total de registros: <strong>{{paginacao.totalItens}}</strong></span>
+    </div>
+</div>

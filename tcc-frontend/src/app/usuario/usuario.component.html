@@ -1,0 +1,129 @@
+<div class='main-content'>
+  <div class='container-fluid'>
+    <div class='row' style='margin-bottom: 30px'>
+      <div class='col-md-2'>
+        <button class='btn btn-primary btn-fill' style='width:100%;'
+          [routerLink]="['/usuario-cadastro', {viewOnly: false}]">
+          <i class='fa fa-plus'></i> Adicionar
+        </button>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-12'>
+        <div class='card'>
+          <div class='header'>
+            <h4>Pesquisar</h4>
+          </div>
+          <div class='content'>
+            <form [formGroup]='formulario' (submit)='pesquisarPorCampo(valorFiltro, valorInputFiltro, filtros)'>
+              <div class='row'>
+                <div class='col-md-5 form-group'>
+                  <label for='valorFiltro' class='control-label'> Filtro:</label>
+                  <select name='valorFiltro' class='form-control' id='valorFiltro'
+                    (change)='valorFiltro = $event.target.value'>
+                    <option value=null selected>Selecione...</option>
+                    <option value='Nome'>Nome</option>
+                    <option value='Cpf'>Cpf</option>
+                    <option value='Rg'>Rg</option>
+                    <option value='DataNascimento'>DataNascimento</option>
+                    <option value='Email'>Email</option>
+                  </select>
+                </div>
+                <div class='col-md-5 form-group'>
+                  <label for='Nome' class='control-label'> Nome do Campo:</label>
+                  <input type='text' id='Nome' class='form-control' placeholder='Nome do Campo' value=''
+                    formControlName='inputNome' (change)='valorInputFiltro = $event.target.value'>
+                </div>
+                <div class='col-md-2 form-group'>
+                  <label for='Submit' class='control-label'><span class='star'></span></label>
+                  <button class='btn btn-primary btn-fill' type='submit' style='width:100%;' id='Submit'>
+                    <i class='fa fa-search'></i> Pesquisar</button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 form-group" *ngIf="filtros.length > 0">
+                  <label for='filtrar' class='control-label'>{{quantidadeFiltros}}</label>
+                  <div id="filtrar">
+                    <button type="button" style="margin-right: 10px;" *ngFor="let teste of filtros"
+                      (click)="Remover(teste)" class="btn btn-xs btn-primary"><span class="btn-label"><i
+                          class="fa fa-times"></i></span>{{teste}} </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-12'>
+        <div class='card'>
+          <div class='header'>
+            <h4> Usuario</h4>
+          </div>
+          <div class='content'>
+            <div class='fresh-datatables'>
+              <table id='datatables' class='table table-striped table-no-bordered table-hover' cellspacing='0'
+                width='100%' style='width:100%'>
+                <thead>
+                  <tr>
+                    <th class='disabled-sorting col-md-2'>Ações</th>
+                    <th class='col-md-1'>{{ dataTable.headerRow[0]}}</th>
+                    <th class='col-md-1'>{{ dataTable.headerRow[1]}}</th>
+                    <th class='col-md-1'>{{ dataTable.headerRow[2]}}</th>
+                    <th class='col-md-1'>{{ dataTable.headerRow[3]}}</th>
+                    <th class='col-md-1'>{{ dataTable.headerRow[4]}}</th>
+                    <th class='col-md-1'>{{ dataTable.headerRow[5]}}</th>
+                    <th class='col-md-1'>{{ dataTable.headerRow[6]}}</th>
+                    <th class='col-md-1'>{{ dataTable.headerRow[7]}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf='dataTable.dataRows && dataTable.dataRows.length > 0; else semUsuario'>
+                    <tr *ngFor='let usuario of dataTable.dataRows'>
+                      <td class='col-md-2'>
+                        <a rel='tooltip' title='Atualizar' class='btn btn-warning btn-round' [routerLink]="[
+                                '/usuario-cadastro',
+                                {
+                                    usuarioNome: usuario.nome,
+                                    usuarioCpf: usuario.cpf,
+                                    usuarioRg: usuario.rg,
+                                    usuarioDataNascimento: usuario.datanascimento,
+                                    usuarioEmail: usuario.email,
+                                    usuarioId: usuario.id,
+                                    viewOnly: false,
+                                    usuarioExiste: true
+                                }
+                              ]">
+                          <i class='fa fa-pencil'></i>
+                        </a>
+                        <a rel='tooltip' title='Deletar' class='btn btn-danger btn-round col-md-offset-1'
+                          (click)='deletaUsuario(usuario.id)'>
+                          <i class='fa fa-trash-o'></i>
+                        </a>
+                      </td>
+                      <td class='col-md-1'>{{ usuario.nome }}</td>
+                      <td class='col-md-1'>{{ usuario.cpf }}</td>
+                      <td class='col-md-1'>{{ usuario.rg }}</td>
+                      <td class='col-md-1'>{{ usuario.dataNascimento }}</td>
+                      <td class='col-md-1'>{{ usuario.email }}</td>
+                      <td class='col-md-1'>{{usuario.ativoStr}}</td>
+                      <td class='col-md-1'>{{ usuario.modificadoPor }}</td>
+                      <td class='col-md-1'>{{ usuario.ultimaModificacaoString }}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <ng-template #semUsuario>
+            <tr class='align-middle'>
+              <td colspan='9' class='text-center py-3'> Nenhum usuario encontrado</td>
+            </tr>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

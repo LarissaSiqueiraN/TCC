@@ -1,0 +1,19 @@
+.card-preco{
+    height: 530px;
+    margin-left: 75px;
+}
+
+.botao-adicionar{
+    padding-top: 270px;
+}
+
+.btn-vejaAgora{
+    background-color: #d8b4f8;
+    min-width: 150px;
+    min-height: 50px;
+
+    &:hover{
+        color: #fec;
+        border-color: #d8b4f8;
+    }
+}
