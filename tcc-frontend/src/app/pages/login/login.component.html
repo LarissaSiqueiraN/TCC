@@ -1,0 +1,45 @@
+<div class="wrapper wrapper-full-page">
+    <div class="full-page login-page" data-image="../../../assets/img/backgroundModeloBaby.png">
+
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                        <form [formGroup]="loginForm">
+
+                            <div class="card card-hidden" style="background-color: #E48586;">
+                                <div class="header text-center titulo">Login</div>
+                                <div class="content">
+                                    <div class="form-group">
+                                        <label class="label-login" style="color: #fec">{{ loginLabel }}</label>
+                                        <input type="email" placeholder="Insira o login" class="form-control" formControlName="login">
+                                        <small [hidden]="!getFormControlValidation('login')" class="text-danger">
+                                            {{ loginLabel }} inválido.
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label-login" style="color: #fec">Senha</label>
+                                        <input type="password" placeholder="Insira a senha" class="form-control" formControlName="password" 
+                                        type="{{ senhaVisivel ? 'text' : 'password' }}">
+                                        <button class="botao-visibilidade" (click)="alternarVisibilidadeSenha()">
+                                            <i [ngClass]="senhaVisivel ? 'fa fa-eye' : 'fa fa-eye-slash'">
+                                            </i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <button type="submit" class="btn-vejaAgora btn btn-wd" 
+                                    (click)="loginSubmit()"  [disabled]="loading">Login</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

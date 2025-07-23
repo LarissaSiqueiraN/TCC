@@ -1,0 +1,37 @@
+
+<ng-container *ngIf="!cardIndisponivel; else templateCardIndisponivel">
+  <div style="background-color: #ba6061;" class="card box" (mouseenter)="mostrarNome = true;" (mouseleave)="mostrarNome = false">
+    <div class="content">
+  
+      <a [routerLink]="['/produtoSelecionado', {id: produto.id}]">
+        <img [src]="produto.caminhoImagem" alt="imagem-teste">
+  
+        <section id="descricao">
+          <div class="box-descricao">
+            <p style="color: #fec">R$ {{produto.valor}}</p>
+            <p style="color: #fec" *ngIf="mostrarNome">{{produto.nome}}</p>
+          </div>
+        </section>
+      </a>
+  
+    </div>
+  </div>
+</ng-container>
+<ng-template #templateCardIndisponivel>
+  <div style="background-color: #ba6061; opacity: 50%;" class="card box" (mouseenter)="mostrarNome = true;" (mouseleave)="mostrarNome = false">
+    <div class="content">
+
+      <a>
+        <img [src]="produto.caminhoImagem" alt="imagem-teste">
+  
+        <section id="descricao">
+          <div class="box-descricao">
+            <p style="color: red; font-size: 16px">Produto Indisponível!</p>
+            <p style="color: #fec" *ngIf="mostrarNome"></p>
+          </div>
+        </section>
+      </a>
+  
+    </div>
+  </div>
+</ng-template>

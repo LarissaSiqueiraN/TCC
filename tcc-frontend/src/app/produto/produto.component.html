@@ -1,0 +1,70 @@
+<div class='main-content' style="background-color: #E48586; padding-bottom: 210px">
+  <div class='container-fluid' style="background-color: #E48586;">
+
+    <div class='row' style='margin-bottom: 30px'>
+      <div class='col-md-2'>
+        <button class='btn btn-pesquisar' style='width:100%; background-color: #d8b4f8;'
+          [routerLink]="['/produto/cadastro', {viewOnly: false}]">
+          <i class='fa fa-plus'></i> Adicionar
+        </button>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-12'>
+        <div class='card' style="background-color: #ba6061;">
+          <div class='header'>
+            <h4 style="color: #fec">Pesquisar</h4>
+          </div>
+          <div class='content'>
+            <form [formGroup]='formulario' (submit)='pesquisarPorCampo()'>
+              <div class='row'>
+                <div class='col-md-5 form-group'>
+                  <label for='valorFiltro' class='control-label' style="color: #fec"> Filtro:</label>
+                  <select name='valorFiltro' class='form-control' id='valorFiltro' formControlName="_valorFiltro" 
+                  (change)="limparInput()">
+                    <option value=null selected dsabled>Selecione...</option>
+                    <option value='Nome'>Nome</option>
+                    <option value='Descricao'>Descricao</option>
+                  </select>
+                </div>
+                <div class='col-md-5 form-group'>
+                  <label for='Nome' class='control-label' style="color: #fec"> Nome do Campo:</label>
+                  <input type='text' id='Nome' class='form-control' placeholder='Nome do Campo'
+                    formControlName='_valorInputFiltro'>
+                </div>
+                <div class='col-md-2 form-group'>
+                  <label for='Submit' class='control-label'><span class='star'></span></label>
+                  <button class='btn btn-pesquisar' type='submit' id='Submit'>
+                    <i class='fa fa-search'></i> Pesquisar</button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 form-group" *ngIf="filtros.length > 0">
+                  <label for='filtrar' class='control-label' style="color: #fec">Filtrar({{ quantidadeFiltros
+                    }})</label>
+                  <div id="filtrar">
+                    <button type="button" style="margin-right: 10px;" *ngFor="let filtro of filtros"
+                      (click)="Remover(filtro)" class="btn btn-xs btn-primary"><span class="btn-label"><i
+                          class="fa fa-times"></i></span>{{filtro.key}}: <strong>{{filtro.label}}</strong></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="listagem" class="card" style="background-color: #ba6061;">
+      <div class="content">
+        <div style="overflow-x: auto;">
+          <app-produto-lista [filtro]="filtro" [data]="produtos" (paginacao)="setPaginacao($event)"></app-produto-lista>
+        </div>
+        <app-paginacao (paginacaoAplicada)="paginacaoAplicada($event)"
+          (alteracaoItensPagina)="alteracaoItensPagina($event)" [paginacao]="paginacao"></app-paginacao>
+      </div>
+    </section>
+
+  </div>
+</div>

@@ -1,0 +1,163 @@
+<table id='datatables' class='table table-striped table-no-bordered table-hover' cellspacing='0' style="color: #fec">
+
+  <thead>
+    <tr>
+      <th style="min-width: 250px; color: #FCBAAD">Nome</th>
+      <th style="min-width: 250px; color: #FCBAAD">Email</th>
+      <th style="min-width: 200px; color: #FCBAAD">Cep</th>
+      <th style="min-width: 50px; color: #FCBAAD">Status</th>
+      <th style="min-width: 50px; color: #FCBAAD">AÇÕES</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngIf="dataTable.dataRows.length == 0" style="background-color: #9e5455">
+      <td colspan="16" class="text-center">Nenhuma Encomenda encontrada.</td>
+    </tr>
+
+    <ng-container *ngFor="let data of dataTable.dataRows">
+      <tr style="background-color: #9e5455">
+        <td>{{data.nome}}</td>
+        <td>{{data.email}}</td>
+        <td>{{data.cep}}</td>
+
+        <ng-container *ngIf="!data.status; else finalizado">
+          <td style="padding-top: 5px;">Pendente</td>
+        </ng-container>
+        <ng-template #finalizado>
+          <td style="padding-top: 5px;">Finalizado</td>
+        </ng-template>
+
+        <td id="acoes">
+          <ng-container *ngIf="!data.status; else btnFinalizado">
+            <a rel='tooltip' title='Atualizar status da encomenda' class='btn btn-danger btn-round'
+              (click)='atualizarStatus(data.id)'>
+              <i class='pe-7s-refresh-2'></i>
+            </a>
+          </ng-container>
+          <ng-template #btnFinalizado>
+            <a rel='tooltip' title='Atualizar status da encomenda' class='btn btn-success btn-round'
+              (click)='atualizarStatus(data.id)'>
+              <i class='pe-7s-refresh-2'></i>
+            </a>
+          </ng-template>
+
+          <button class='btn btn-success btn-round btn-icon' style="margin-left: 10px" rel='tooltip'
+            title="Expandir informações" (click)="expandirMenu('expandir-' + data.id)">
+            <i class='fa fa-chevron-down'></i>
+          </button>
+        </td>
+
+        <hr style="padding-top: 15px">
+      </tr>
+      <tr style="background-color: #9e5455">
+        <td colspan="16" style="display: none; border-color: white;" [id]="'expandir-' + data.id">
+          <div class="card" style="background-color: #9e5455">
+            <div class="content" style="overflow-x: auto;">
+              <div class="row">
+                <div class="col-md-1">
+                  <span><strong>Endereço </strong></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-1">
+                  <span><strong>Bairro: </strong></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="span-expandir">{{data.bairro}}</span>
+                </div>
+                <div class="col-md-1">
+                  <span><strong>Logradouro: </strong></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="span-expandir">{{data.rua}}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-1">
+                  <span><strong>Número: </strong></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="span-expandir">{{data.numero}}</span>
+                </div>
+                <div class="col-md-1">
+                  <span><strong>Complemento: </strong></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="span-expandir">{{data.complemento}}</span>
+                </div>
+              </div>
+              <div class="row nova-row">
+                <div class="col-md-1">
+                  <span><strong>Alergias: </strong></span>
+                </div>
+                <div class="col-md-3">
+                  <ng-container *ngIf="data.temAlergias; else semAlergia">
+                    <span>{{data.alergias}}</span>
+                  </ng-container>
+                  <ng-template #semAlergia>
+                    <span>Nenhuma</span>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="row nova-row">
+                <div class="col-md-1">
+                  <span><strong>Produtos</strong></span>
+                </div>
+              </div>
+              <ng-container *ngFor="let produto of data.produtos">
+                <div class="row nova-row">
+
+                  <div class="col-md-1">
+                    <span><strong>Nome: </strong></span>
+                  </div>
+                  <div class="col-md-3">
+                    <span>{{produto.nome}}</span>
+                  </div>
+                </div>
+
+              </ng-container>
+              <div class="row nova-row">
+                <div class="col-md-2">
+                  <span><strong>Serviço incluso: </strong></span>
+                </div>
+                <div class="col-md-3">
+                  <ng-container *ngIf="data.adicionarServicoFuro ; else servicoNaoIncluso"><span>Sim</span></ng-container>
+                  <ng-template #servicoNaoIncluso><span>Não</span></ng-template>
+                </div>
+              </div>
+              <div class="row nova-row">
+                <div class="col-md-2">
+                  <span><strong>Forma de pagamento: </strong></span>
+                </div>
+                <div class="col-md-3">
+                  <span>{{data.pagamento}}</span>
+                </div>
+              </div>
+              <div class="row nova-row">
+                <div class="col-md-2">
+                  <span><strong>Valor total: </strong></span>
+                </div>
+                <div>
+                  <span>{{ data.valorTotal }}</span>
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
+                  <span class="expandir">{{orgao.logradouro}}</span>
+                </div>
+                <div class="col-md-1">
+                  <span 
+                  [innerHTML]="'orgao.expandir.municipio' | translate"><strong>Municipio: </strong></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="expandir">{{orgao.municipio}}</span>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr [hidden]="true"></tr>
+    </ng-container>
+  </tbody>
+</table>
