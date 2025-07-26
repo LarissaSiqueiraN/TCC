@@ -9,16 +9,21 @@ const server = http.createServer((req, res) => {
 
     if (req.url === '/' || req.url === '/inicio') {
         filePath = path.join(__dirname, 'pages', 'inicio', 'inicio.html');
+    } else if (req.url === '/analises') {
+        filePath = path.join(__dirname, 'pages', 'analises',  'analises.html');
     } else if (req.url.startsWith('/pages/')) {
-        filePath = path.join(__dirname, 'pages', req.url.replace('/inicio/', ''));
+        filePath = path.join(__dirname, 'pages', req.url.replace('/pages/', ''));
     } else if (req.url.startsWith('/components/')) {
         filePath = path.join(__dirname, 'components', req.url.replace('/components/', ''));
     } 
     else if (req.url.startsWith('/publics/')) {
         filePath = path.join(__dirname, 'publics', req.url.replace('/publics/', ''));
     }
-    else {
-        filePath = path.join(__dirname, 'pages', req.url);
+
+    if (!filePath) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Página não encontrada');
+        return;
     }
 
     const extname = String(path.extname(filePath)).toLowerCase();
