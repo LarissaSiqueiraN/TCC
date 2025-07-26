@@ -5,17 +5,28 @@ const path = require('path');
 const PORT = 3000;
 
 const server = http.createServer((req, res) => {
-    let filePath = path.join(__dirname, 'pages', req.url);
+    let filePath;
 
     if (req.url === '/' || req.url === '/inicio') {
         filePath = path.join(__dirname, 'pages', 'inicio', 'inicio.html');
+    } else if (req.url.startsWith('/pages/')) {
+        filePath = path.join(__dirname, 'pages', req.url.replace('/inicio/', ''));
+    } else if (req.url.startsWith('/components/')) {
+        filePath = path.join(__dirname, 'components', req.url.replace('/components/', ''));
+    } 
+    else if (req.url.startsWith('/publics/')) {
+        filePath = path.join(__dirname, 'publics', req.url.replace('/publics/', ''));
+    }
+    else {
+        filePath = path.join(__dirname, 'pages', req.url);
     }
 
     const extname = String(path.extname(filePath)).toLowerCase();
     const mimeTypes = {
         '.html': 'text/html',
         '.js': 'text/javascript',
-        '.css': 'text/css'
+        '.css': 'text/css',
+        '.png': 'image/png'
     };
 
     const contentType = mimeTypes[extname] || 'application/octet-stream';
