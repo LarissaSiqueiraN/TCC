@@ -1,76 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blue Plot | Análise Espectroscópica</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="stylesheet" href="/pages/analises/analises.css" />
-    <link rel="stylesheet" href="/components/navbar/navbar.css" />
-    <script src="/pages/analises/analises.js"></script>
-  </head>
-  <body>
-    <header id="navbar-container"></header>
+<h2
+  style="
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary-blue);
+    font-size: 2rem;
+  "
+>
+  Tipos de Gráficos
+</h2>
+<p
+  style="
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    color: var(--dark-gray);
+    line-height: 1.6;
+  "
+>
+  Selecione o tipo de gráfico que melhor se adapta às suas necessidades de
+  análise espectroscópica
+</p>
 
-    <main>
-      <h2
-        style="
-          text-align: center;
-          margin-bottom: 1.5rem;
-          color: var(--primary-blue);
-          font-size: 2rem;
-        "
-      >
-        Tipos de Gráficos
-      </h2>
-      <p
-        style="
-          text-align: center;
-          max-width: 700px;
-          margin: 0 auto 3rem;
-          color: var(--dark-gray);
-          line-height: 1.6;
-        "
-      >
-        Selecione o tipo de gráfico que melhor se adapta às suas necessidades de
-        análise espectroscópica
-      </p>
-
-      <div class="graph-types">
-        <div class="graph-card" onclick="startAnalysis('line')">
-          <div class="graph-icon">
-            <i class="fas fa-chart-line"></i>
-          </div>
-          <h3>Gráfico de Linha</h3>
-          <p>
-            Ideal para mostrar tendências e variações ao longo do tempo ou
-            comprimento de onda em análises espectroscópicas.
-          </p>
-        </div>
-        <div class="graph-card" onclick="startAnalysis('bar')">
-          <div class="graph-icon">
-            <i class="fas fa-chart-bar"></i>
-          </div>
-          <h3>Gráfico de Barras</h3>
-          <p>
-            Perfeito para comparar intensidades entre diferentes amostras ou
-            condições experimentais.
-          </p>
-        </div>
-        <div class="graph-card" onclick="startAnalysis('pie')">
-          <div class="graph-icon">
-            <i class="fas fa-chart-pie"></i>
-          </div>
-          <h3>Gráfico de Setor</h3>
-          <p>
-            Excelente para representar composições percentuais de componentes
-            espectrais em sua amostra.
-          </p>
-        </div>
-      </div>
-    </main>
-  </body>
-</html>
+<div class="graph-types">
+  <div class="graph-card" onclick="startAnalysis('line')">
+    <div class="graph-icon">
+      <i class="fas fa-chart-line"></i>
+    </div>
+    <h3>Gráfico de Linha</h3>
+    <p>
+      Ideal para mostrar tendências e variações ao longo do tempo ou comprimento
+      de onda em análises espectroscópicas.
+    </p>
+  </div>
+  <div class="graph-card" onclick="startAnalysis('bar')">
+    <div class="graph-icon">
+      <i class="fas fa-chart-bar"></i>
+    </div>
+    <h3>Gráfico de Barras</h3>
+    <p>
+      Perfeito para comparar intensidades entre diferentes amostras ou condições
+      experimentais.
+    </p>
+  </div>
+  <div class="graph-card" onclick="startAnalysis('pie')">
+    <div class="graph-icon">
+      <i class="fas fa-chart-pie"></i>
+    </div>
+    <h3>Gráfico de Setor</h3>
+    <p>
+      Excelente para representar composições percentuais de componentes
+      espectrais em sua amostra.
+    </p>
+  </div>
+</div>

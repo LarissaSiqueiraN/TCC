@@ -1,0 +1,23 @@
+.footer-links {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: var(--dark-gray);
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--primary-blue);
+}
+
+.copyright {
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+}
