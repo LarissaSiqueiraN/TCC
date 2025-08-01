@@ -9,8 +9,8 @@ function renderizarPagina(pageName, res) {
     const baseComponents = path.join(__dirname, 'components');
 
     const main = fs.readFileSync(path.join(__dirname, 'main.html'), 'utf-8');
-    const navbar = fs.readFileSync(path.join(baseComponents, 'navbar','navbar.html'), 'utf-8');
-    const footbar = fs.readFileSync(path.join(baseComponents, 'footbar','footbar.html'), 'utf-8');
+    const navbar = fs.readFileSync(path.join(baseComponents, 'navbar', 'navbar.html'), 'utf-8');
+    const footbar = fs.readFileSync(path.join(baseComponents, 'footbar', 'footbar.html'), 'utf-8');
     const pageHtml = fs.readFileSync(path.join(baseDir, `${pageName}.html`), 'utf-8');
     const pageCss = `<link rel="stylesheet" href="/pages/${pageName}/${pageName}.css">`;
     const pageJs = `<script src="/pages/${pageName}/${pageName}.js"></script>`;
@@ -46,12 +46,15 @@ function disponibilizarArquivos(req) {
         return path.join(__dirname, 'pages', req.url.replace('/pages/', ''));
     } else if (req.url.startsWith('/components/')) {
         return path.join(__dirname, 'components', req.url.replace('/components/', ''));
-    } 
+    }
     else if (req.url.startsWith('/publics/')) {
         return path.join(__dirname, 'publics', req.url.replace('/publics/', ''));
     }
+    else if (req.url.startsWith('/styles/')) {
+        return path.join(__dirname, 'styles', req.url.replace('/styles/', ''));
+    }
     else {
-        return null; 
+        return null;
     }
 }
 
