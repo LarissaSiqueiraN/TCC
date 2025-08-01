@@ -9,15 +9,19 @@ function renderizarPagina(pageName, res) {
     const baseComponents = path.join(__dirname, 'components');
 
     const main = fs.readFileSync(path.join(__dirname, 'main.html'), 'utf-8');
-    const navbar = fs.readFileSync(path.join(baseComponents, 'navbar', 'navbar.html'), 'utf-8');
+    const navbarTemplate = fs.readFileSync(path.join(baseComponents, 'navbar', 'navbar.html'), 'utf-8');
+    const navbarJs = fs.readFileSync(path.join(baseComponents, 'navbar', 'navbar.js'), 'utf-8');
     const footbar = fs.readFileSync(path.join(baseComponents, 'footbar', 'footbar.html'), 'utf-8');
+    const loginModal = fs.readFileSync(path.join(baseComponents, 'login', 'login.html'), 'utf-8');
     const pageHtml = fs.readFileSync(path.join(baseDir, `${pageName}.html`), 'utf-8');
     const pageCss = `<link rel="stylesheet" href="/pages/${pageName}/${pageName}.css">`;
     const pageJs = `<script src="/pages/${pageName}/${pageName}.js"></script>`;
 
     let html = main
-        .replace('{{navbar}}', navbar)
+        .replace('{{navbar}}', navbarTemplate)
+        .replace('{{navbarJs}}', navbarJs)
         .replace('{{footbar}}', footbar)
+        .replace('{{loginModal}}', loginModal)
         .replace('{{pageHtml}}', pageHtml)
         .replace('{{pageCss}}', pageCss)
         .replace('{{pageJs}}', pageJs);

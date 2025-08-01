@@ -1,5 +1,5 @@
 {
-  "name": "Blue Plot - Portal",
+  "name": "Blue Plot Portal",
   "version": "1.0.0",
   "description": "A simple frontend application using classic architecture.",
   "main": "src/app.js",
