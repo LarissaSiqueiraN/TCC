@@ -1,0 +1,74 @@
+<div class="dashboard" id="analysisDashboard">
+  <div class="dashboard-header">
+    <h2 class="dashboard-title">Nova Análise</h2>
+    <div>
+      <button class="btn btn-outline" onclick="openHelpModal()">
+        <i class="fas fa-question-circle"></i> Ajuda
+      </button>
+      <button class="btn btn-primary" onclick="saveAnalysis()">
+        <i class="fas fa-save"></i> Salvar
+      </button>
+    </div>
+  </div>
+
+  <div class="sample-info">
+    <h3>Informações da Análise</h3>
+    <div class="form-group">
+      <label for="project-name">Nome da Análise</label>
+      <input
+        type="text"
+        id="project-name"
+        placeholder="Ex: Espectro UV-Vis Amostra A"
+      />
+    </div>
+    <div class="form-group">
+      <label for="project-description">Descrição</label>
+      <textarea
+        id="project-description"
+        rows="3"
+        placeholder="Detalhes sobre a análise, condições experimentais..."
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="graph-controls">
+    <div class="control-group">
+      <label for="graph-type">Tipo de Gráfico</label>
+      <select id="graph-type" onchange="updateGraphPlaceholder()">
+        <option value="line">Linha</option>
+        <option value="bar">Barras</option>
+        <option value="pie">Setor</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label for="wavelength-range">Faixa de Comprimento de Onda (nm)</label>
+      <input type="text" id="wavelength-range" placeholder="Ex: 200-800" />
+    </div>
+  </div>
+
+  <div class="graph-container">
+    <div class="graph-placeholder">
+      <i class="fas fa-chart-area"></i>
+      <p>Selecione um tipo de gráfico e carregue os dados para visualização</p>
+      <button
+        class="btn btn-primary"
+        style="padding: 0.8rem 2rem; margin-top: 1rem"
+        onclick="loadData()"
+      >
+        <i class="fas fa-upload"></i> Carregar Dados
+      </button>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="btn btn-outline" onclick="showGraphSelection()">
+      <i class="fas fa-arrow-left"></i> Voltar
+    </button>
+    <button class="btn btn-outline" onclick="resetAnalysis()">
+      <i class="fas fa-redo"></i> Redefinir
+    </button>
+    <button class="btn btn-primary" onclick="exportAnalysis()">
+      <i class="fas fa-file-export"></i> Exportar
+    </button>
+  </div>
+</div>

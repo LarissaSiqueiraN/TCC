@@ -90,6 +90,63 @@ footer {
   background-color: var(--light-blue);
 }
 
+.form-group label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-blue);
+  outline: none;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.control-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+  color: var(--dark-gray);
+  font-size: 0.95rem;
+}
+
+.control-group select,
+.control-group input {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.control-group select:focus,
+.control-group input:focus {
+  border-color: var(--primary-blue);
+  outline: none;
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);

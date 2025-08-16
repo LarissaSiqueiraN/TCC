@@ -4,8 +4,8 @@ const path = require('path');
 
 const PORT = 3000;
 
-function renderizarPagina(pageName, res) {
-    const baseDir = path.join(__dirname, 'pages', pageName);
+function renderizarPagina(pagePath, res) {
+    const baseDir = path.join(__dirname, 'pages', pagePath);
     const baseComponents = path.join(__dirname, 'components');
 
     const main = fs.readFileSync(path.join(__dirname, 'main.html'), 'utf-8');
@@ -13,9 +13,9 @@ function renderizarPagina(pageName, res) {
     const navbarJs = fs.readFileSync(path.join(baseComponents, 'navbar', 'navbar.js'), 'utf-8');
     const footbar = fs.readFileSync(path.join(baseComponents, 'footbar', 'footbar.html'), 'utf-8');
     const loginModal = fs.readFileSync(path.join(baseComponents, 'login', 'login.html'), 'utf-8');
-    const pageHtml = fs.readFileSync(path.join(baseDir, `${pageName}.html`), 'utf-8');
-    const pageCss = `<link rel="stylesheet" href="/pages/${pageName}/${pageName}.css">`;
-    const pageJs = `<script src="/pages/${pageName}/${pageName}.js"></script>`;
+    const pageHtml = fs.readFileSync(path.join(baseDir, `${path.basename(pagePath)}.html`), 'utf-8');
+    const pageCss = `<link rel="stylesheet" href="/pages/${pagePath}/${path.basename(pagePath)}.css">`;
+    const pageJs = `<script src="/pages/${pagePath}/${path.basename(pagePath)}.js"></script>`;
 
     let html = main
         .replace('{{navbar}}', navbarTemplate)
@@ -31,17 +31,21 @@ function renderizarPagina(pageName, res) {
 }
 
 function tratarRotaDinamica(req, res) {
-    if (req.url === '/' || req.url === '/inicio') {
+    const urlPath = req.url.replace(/^\/+/, '');
+
+    if (urlPath === '/' || urlPath === '/inicio') {
         renderizarPagina('inicio', res);
         return true;
-    } else if (req.url === '/analises') {
-        renderizarPagina('analises', res);
+    } 
+
+    const baseDir = path.join(__dirname, 'pages', urlPath);
+    const htmlFile = path.join(baseDir, `${path.basename(urlPath)}.html`);
+    
+    if (fs.existsSync(htmlFile)) {
+        renderizarPagina(urlPath, res);
         return true;
     }
-    else if (req.url === '/salvos') {
-        renderizarPagina('salvos', res);
-        return true;
-    }
+    
     return false;
 }
 
