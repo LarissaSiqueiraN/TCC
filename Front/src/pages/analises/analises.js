@@ -1,5 +1,5 @@
 console.log("Entrou analises.js");
 
-function cadastrarAnalise() {
-    window.location.href = '/analises/cadastro';
+function cadastrarAnalise(tipo) {
+    window.location.href = '/analises/cadastro?tipo=' + tipo;
 }

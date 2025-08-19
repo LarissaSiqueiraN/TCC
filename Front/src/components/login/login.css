@@ -34,6 +34,7 @@
   overflow-y: auto;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   animation: modalFadeIn 0.3s ease;
+  overflow: auto
 }
 
 .modal-header {
