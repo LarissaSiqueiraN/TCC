@@ -7,10 +7,9 @@ builder.Configuration.AddEnvironmentVariables().Build();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddSwaggerConfiguration();
 
 var stringConexao = builder.Configuration.GetConnectionString("DefaultConnection");
-//builder.Services.AddDbContext<BancoApi>
+builder.Services.AddDbContext<BancoAPIContext>(options => options n)
 
 
 var app = builder.Build();

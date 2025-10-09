@@ -33,7 +33,9 @@ function renderizarPagina(pagePath, res) {
 function tratarRotaDinamica(req, res) {
     const urlPath = req.url.replace(/^\/+/, '').split('?')[0];
     
-    if (urlPath === '/' || urlPath === '/inicio') {
+    // console.log('Rota solicitada:', urlPath);
+
+    if (urlPath === '' || urlPath === '/' || urlPath === '/inicio') {
         renderizarPagina('inicio', res);
         return true;
     } 

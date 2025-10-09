@@ -417,7 +417,7 @@
             font-size: 0.9rem;
         }
 
-        /* Modal */
+        /* Modal de Autenticação */
         .modal {
             display: none;
             position: fixed;
@@ -501,9 +501,10 @@
         .auth-form input {
             width: 100%;
             padding: 0.7rem;
-            border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 0.9rem;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            transition: border 0.3s;
         }
 
         .auth-form input:focus {
@@ -511,102 +512,48 @@
             outline: none;
         }
 
-        .auth-actions {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .auth-switch {
-            text-align: center;
+        .auth-form button {
             margin-top: 1rem;
-            font-size: 0.9rem;
-            color: var(--dark-gray);
+            width: 100%;
         }
 
-        .auth-switch a {
+        /* FAQ */
+        #faqSection h2 {
+            text-align: center;
+            margin-bottom: 2rem;
             color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 500;
+            font-size: 2rem;
         }
 
-        .auth-switch a:hover {
-            text-decoration: underline;
+        .faq-item {
+            background-color: var(--light-blue);
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
         }
 
-        /* Responsividade */
-        @media (max-width: 1024px) {
-            .nav-menu {
-                gap: 15px;
-                margin-left: 20px;
-            }
+        .faq-item h3 {
+            color: var(--primary-blue);
+            font-size: 1.2rem;
         }
 
-        @media (max-width: 768px) {
-            header {
-                flex-wrap: wrap;
-                padding: 0.8rem 1rem;
-                gap: 10px;
-            }
-
-            .logo-container {
-                order: 1;
-            }
-
-            .nav-menu {
-                order: 3;
-                width: 100%;
-                margin: 10px 0 0;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            .user-actions {
-                order: 2;
-                margin-left: auto;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .graph-card {
-                width: 100%;
-            }
-
-            .dashboard {
-                padding: 1.5rem;
-            }
-
-            .dashboard-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-            }
+        .faq-item p {
+            display: none;
+            color: var(--dark-gray);
+            margin-top: 0.5rem;
+            line-height: 1.5;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- ================= HEADER ================= -->
     <header>
         <div class="logo-container">
             <img src="blueplot-logo.png" alt="Blue Plot Logo" class="logo">
             <span class="logo-text">Blue Plot</span>
         </div>
-        
+
         <nav class="nav-menu">
             <div class="nav-item">
                 <a href="#" class="nav-link" onclick="showHome()">
@@ -629,12 +576,12 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" onclick="showFAQ()">
                     <i class="fas fa-question-circle"></i> Ajuda
                 </a>
             </div>
         </nav>
-        
+
         <div class="user-actions">
             <button class="btn btn-login" onclick="openAuthModal('login')">
                 <i class="fas fa-user"></i> Login
@@ -642,356 +589,197 @@
         </div>
     </header>
 
+    <!-- ================= MAIN ================= -->
     <main>
-        <section class="hero" id="homeSection">
-            <div class="hero-content">
-                <h1>Análise Espectroscópica Avançada</h1>
-                <p>Visualize, analise e compartilhe dados espectroscópicos com precisão e facilidade</p>
-                <button class="btn btn-primary" style="padding: 0.8rem 2rem; margin-top: 1.5rem;" onclick="showGraphSelection()">
-                    <i class="fas fa-chart-line"></i> Começar Análise
-                </button>
+        <!-- Home Section -->
+        <section id="homeSection">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Bem-vindo ao Blue Plot</h1>
+                    <p>Visualize e analise seus dados espectroscópicos com gráficos interativos e ferramentas intuitivas.</p>
+                    <button class="btn btn-primary" onclick="showGraphSelection()">Começar Análise</button>
+                </div>
             </div>
         </section>
 
-        <section id="graphSelectionSection" style="display: none;">
-            <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary-blue); font-size: 2rem;">Tipos de Gráficos</h2>
-            <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem; color: var(--dark-gray); line-height: 1.6;">
-                Selecione o tipo de gráfico que melhor se adapta às suas necessidades de análise espectroscópica
-            </p>
-            
+        <!-- Graph Selection -->
+        <section id="graphSelectionSection" style="display:none;">
             <div class="graph-types">
-                <div class="graph-card" onclick="startAnalysis('line')">
-                    <div class="graph-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
+                <div class="graph-card" onclick="showDashboard('line')">
+                    <div class="graph-icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Gráfico de Linha</h3>
-                    <p>Ideal para mostrar tendências e variações ao longo do tempo ou comprimento de onda em análises espectroscópicas.</p>
+                    <p>Ideal para observar tendências ao longo do tempo ou variações contínuas de espectros.</p>
                 </div>
-                <div class="graph-card" onclick="startAnalysis('bar')">
-                    <div class="graph-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
+                <div class="graph-card" onclick="showDashboard('bar')">
+                    <div class="graph-icon"><i class="fas fa-chart-bar"></i></div>
                     <h3>Gráfico de Barras</h3>
-                    <p>Perfeito para comparar intensidades entre diferentes amostras ou condições experimentais.</p>
+                    <p>Comparação direta de intensidades ou categorias de forma clara e objetiva.</p>
                 </div>
-                <div class="graph-card" onclick="startAnalysis('pie')">
-                    <div class="graph-icon">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
+                <div class="graph-card" onclick="showDashboard('pie')">
+                    <div class="graph-icon"><i class="fas fa-chart-pie"></i></div>
                     <h3>Gráfico de Setor</h3>
-                    <p>Excelente para representar composições percentuais de componentes espectrais em sua amostra.</p>
+                    <p>Perfeito para representar proporções de cada componente em seu espectro.</p>
                 </div>
             </div>
         </section>
 
-        <section class="dashboard" id="analysisDashboard" style="display: none;">
+        <!-- Dashboard -->
+        <section id="analysisDashboard" class="dashboard">
             <div class="dashboard-header">
-                <h2 class="dashboard-title">Nova Análise</h2>
-                <div>
-                    <button class="btn btn-outline" onclick="openHelpModal()">
-                        <i class="fas fa-question-circle"></i> Ajuda
-                    </button>
-                    <button class="btn btn-primary" onclick="saveAnalysis()">
-                        <i class="fas fa-save"></i> Salvar
-                    </button>
-                </div>
+                <h2 class="dashboard-title">Painel de Análise</h2>
             </div>
-
-            <div class="sample-info">
-                <h3>Informações da Análise</h3>
-                <div class="form-group">
-                    <label for="project-name">Nome da Análise</label>
-                    <input type="text" id="project-name" placeholder="Ex: Espectro UV-Vis Amostra A">
-                </div>
-                <div class="form-group">
-                    <label for="project-description">Descrição</label>
-                    <textarea id="project-description" rows="3" placeholder="Detalhes sobre a análise, condições experimentais..."></textarea>
-                </div>
-            </div>
-
-            <div class="graph-controls">
-                <div class="control-group">
-                    <label for="graph-type">Tipo de Gráfico</label>
-                    <select id="graph-type" onchange="updateGraphPlaceholder()">
-                        <option value="line">Linha</option>
-                        <option value="bar">Barras</option>
-                        <option value="pie">Setor</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label for="wavelength-range">Faixa de Comprimento de Onda (nm)</label>
-                    <input type="text" id="wavelength-range" placeholder="Ex: 200-800">
-                </div>
-            </div>
-
             <div class="graph-container">
                 <div class="graph-placeholder">
                     <i class="fas fa-chart-area"></i>
-                    <p>Selecione um tipo de gráfico e carregue os dados para visualização</p>
-                    <button class="btn btn-primary" style="padding: 0.8rem 2rem; margin-top: 1rem;" onclick="loadData()">
-                        <i class="fas fa-upload"></i> Carregar Dados
-                    </button>
+                    <p>Seu gráfico será exibido aqui.</p>
                 </div>
             </div>
-
             <div class="action-buttons">
-                <button class="btn btn-outline" onclick="showGraphSelection()">
-                    <i class="fas fa-arrow-left"></i> Voltar
-                </button>
-                <button class="btn btn-outline" onclick="resetAnalysis()">
-                    <i class="fas fa-redo"></i> Redefinir
-                </button>
-                <button class="btn btn-primary" onclick="exportAnalysis()">
-                    <i class="fas fa-file-export"></i> Exportar
-                </button>
+                <button class="btn btn-primary">Salvar</button>
+                <button class="btn btn-outline">Exportar</button>
+                <button class="btn btn-outline" onclick="resetDashboard()">Redefinir</button>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faqSection" style="display:none;">
+            <h2>Perguntas Frequentes (FAQ)</h2>
+            <div class="faq-container" style="max-width: 900px; margin: 0 auto; display:flex; flex-direction:column; gap:1rem;">
+                <div class="faq-item">
+                    <h3>Como posso criar uma nova análise?</h3>
+                    <p>Clique no botão "Começar Análise" na tela inicial ou selecione um tipo de gráfico na seção de Análises.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Como salvar minhas análises?</h3>
+                    <p>Após configurar seu gráfico e inserir os dados, clique no botão "Salvar" no painel de análise para armazenar sua análise.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Quais tipos de gráficos estão disponíveis?</h3>
+                    <p>Gráfico de Linha, Gráfico de Barras e Gráfico de Setor, ideais para diferentes tipos de análise espectroscópica.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Como posso exportar meus resultados?</h3>
+                    <p>Clique no botão "Exportar" no painel de análise. Em versões futuras, será possível exportar em PNG, PDF ou CSV.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Posso editar ou redefinir uma análise?</h3>
+                    <p>Sim, use o botão "Redefinir" no painel de análise para limpar os dados e reiniciar a configuração do gráfico.</p>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top:2rem;">
+                <button class="btn btn-outline" onclick="showHome()"><i class="fas fa-arrow-left"></i> Voltar</button>
             </div>
         </section>
     </main>
 
-    <footer>
-        <ul class="footer-links">
-            <li><a href="#">Termos de Serviço</a></li>
-            <li><a href="#">Privacidade</a></li>
-            <li><a href="#">Contato</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Documentação</a></li>
-        </ul>
-        <p class="copyright">© 2025 Blue Plot - Todos os direitos reservados</p>
-    </footer>
-
-    <!-- Modal de Autenticação -->
+    <!-- Modal Login -->
     <div class="modal" id="authModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="authModalTitle">Entrar</h2>
+                <h2 id="modalTitle">Login</h2>
                 <button class="close-modal" onclick="closeAuthModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="loginForm" class="auth-form active">
                     <div class="form-group">
-                        <label for="login-email">E-mail</label>
-                        <input type="email" id="login-email" placeholder="seu@email.com" required>
+                        <label for="loginEmail">E-mail</label>
+                        <input type="email" id="loginEmail" required>
                     </div>
                     <div class="form-group">
-                        <label for="login-password">Senha</label>
-                        <input type="password" id="login-password" placeholder="Sua senha" required>
+                        <label for="loginPassword">Senha</label>
+                        <input type="password" id="loginPassword" required>
                     </div>
-                    <div style="text-align: right; margin-top: 0.5rem;">
-                        <a href="#" style="color: var(--primary-blue); text-decoration: none; font-size: 0.9rem;" 
-                           onclick="showForgotPassword()">Esqueceu a senha?</a>
-                    </div>
-                    <div class="auth-actions">
-                        <button type="button" class="btn btn-primary" onclick="login()" style="width: 100%;">
-                            <i class="fas fa-sign-in-alt"></i> Entrar
-                        </button>
-                    </div>
-                    <div class="auth-switch">
-                        Não tem uma conta? <a href="#" onclick="switchAuthForm('register')">Cadastre-se</a>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
                 </form>
-
                 <form id="registerForm" class="auth-form">
                     <div class="form-group">
-                        <label for="register-name">Nome Completo</label>
-                        <input type="text" id="register-name" placeholder="Seu nome completo" required>
+                        <label for="registerEmail">E-mail</label>
+                        <input type="email" id="registerEmail" required>
                     </div>
                     <div class="form-group">
-                        <label for="register-email">E-mail</label>
-                        <input type="email" id="register-email" placeholder="seu@email.com" required>
+                        <label for="registerPassword">Senha</label>
+                        <input type="password" id="registerPassword" required>
                     </div>
-                    <div class="form-group">
-                        <label for="register-password">Senha</label>
-                        <input type="password" id="register-password" placeholder="Mínimo 8 caracteres" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-confirm">Confirmar Senha</label>
-                        <input type="password" id="register-confirm" placeholder="Confirme sua senha" required>
-                    </div>
-                    <div class="auth-actions">
-                        <button type="button" class="btn btn-primary" onclick="register()" style="width: 100%;">
-                            <i class="fas fa-user-plus"></i> Cadastrar
-                        </button>
-                    </div>
-                    <div class="auth-switch">
-                        Já tem uma conta? <a href="#" onclick="switchAuthForm('login')">Faça login</a>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </form>
             </div>
         </div>
     </div>
 
-
-    <div class="modal" id="helpModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Ajuda - Blue Plot</h2>
-                <button class="close-modal" onclick="closeHelpModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <h3 style="margin-bottom: 1rem; color: var(--primary-blue);">Como usar o Blue Plot</h3>
-                <p style="margin-bottom: 1.5rem;">O Blue Plot é uma ferramenta avançada para análise e visualização de dados espectroscópicos. Siga estes passos para criar sua análise:</p>
-                
-                <div style="background-color: var(--light-blue); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-blue);">Passo 1: Informações da Análise</h4>
-                    <p>Preencha o nome da análise e uma descrição detalhada com informações relevantes sobre a amostra e condições experimentais.</p>
-                </div>
-                
-                <div style="background-color: var(--light-blue); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-blue);">Passo 2: Configurações do Gráfico</h4>
-                    <p>Selecione o tipo de gráfico adequado para sua análise e especifique a faixa de comprimento de onda de interesse.</p>
-                </div>
-                
-                <div style="background-color: var(--light-blue); padding: 1rem; border-radius: 8px;">
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-blue);">Passo 3: Carregar Dados</h4>
-                    <p>Importe seus dados espectroscópicos manualmente para visualização.</p>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <button class="btn btn-primary" onclick="closeHelpModal()">Fechar</button>
-            </div>
-        </div>
-    </div>
+    <footer>
+        <ul class="footer-links">
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Contato</a></li>
+            <li><a href="#">Privacidade</a></li>
+        </ul>
+        <div class="copyright">&copy; 2025 Blue Plot. Todos os direitos reservados.</div>
+    </footer>
 
     <script>
-     
+        // ================= NAVIGATION =================
         function showHome() {
             document.getElementById('homeSection').style.display = 'block';
             document.getElementById('graphSelectionSection').style.display = 'none';
             document.getElementById('analysisDashboard').style.display = 'none';
+            document.getElementById('faqSection').style.display = 'none';
         }
 
         function showGraphSelection() {
             document.getElementById('homeSection').style.display = 'none';
-            document.getElementById('graphSelectionSection').style.display = 'block';
+            document.getElementById('graphSelectionSection').style.display = 'flex';
             document.getElementById('analysisDashboard').style.display = 'none';
+            document.getElementById('faqSection').style.display = 'none';
         }
 
-        function startAnalysis(type) {
+        function showDashboard(type) {
             document.getElementById('homeSection').style.display = 'none';
             document.getElementById('graphSelectionSection').style.display = 'none';
             document.getElementById('analysisDashboard').style.display = 'block';
-            document.getElementById('graph-type').value = type;
-            updateGraphPlaceholder();
+            document.getElementById('faqSection').style.display = 'none';
         }
 
-        // Atualiza o placeholder do gráfico
-        function updateGraphPlaceholder() {
-            const type = document.getElementById('graph-type').value;
-            const placeholder = document.querySelector('.graph-placeholder i');
-            const placeholderText = document.querySelector('.graph-placeholder p');
-            
-            switch(type) {
-                case 'line':
-                    placeholder.className = 'fas fa-chart-line';
-                    placeholderText.textContent = 'Carregue os dados para visualizar o gráfico de linha';
-                    break;
-                case 'bar':
-                    placeholder.className = 'fas fa-chart-bar';
-                    placeholderText.textContent = 'Carregue os dados para visualizar o gráfico de barras';
-                    break;
-                case 'pie':
-                    placeholder.className = 'fas fa-chart-pie';
-                    placeholderText.textContent = 'Carregue os dados para visualizar o gráfico de setor';
-                    break;
-            }
+        function resetDashboard() {
+            alert("Painel redefinido! Configure seus dados novamente.");
         }
 
-      
-        function openAuthModal(form = 'login') {
+        // ================= FAQ =================
+        function showFAQ() {
+            document.getElementById('homeSection').style.display = 'none';
+            document.getElementById('graphSelectionSection').style.display = 'none';
+            document.getElementById('analysisDashboard').style.display = 'none';
+            document.getElementById('faqSection').style.display = 'block';
+        }
+
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.querySelector('p');
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // ================= AUTH MODAL =================
+        function openAuthModal(type) {
             document.getElementById('authModal').style.display = 'flex';
-            switchAuthForm(form);
+            if(type === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+                document.getElementById('registerForm').classList.remove('active');
+                document.getElementById('modalTitle').innerText = 'Login';
+            } else {
+                document.getElementById('loginForm').classList.remove('active');
+                document.getElementById('registerForm').classList.add('active');
+                document.getElementById('modalTitle').innerText = 'Cadastrar';
+            }
         }
 
         function closeAuthModal() {
             document.getElementById('authModal').style.display = 'none';
         }
 
-        function switchAuthForm(form) {
-            if(form === 'login') {
-                document.getElementById('loginForm').classList.add('active');
-                document.getElementById('registerForm').classList.remove('active');
-                document.getElementById('authModalTitle').textContent = 'Entrar';
-            } else {
-                document.getElementById('loginForm').classList.remove('active');
-                document.getElementById('registerForm').classList.add('active');
-                document.getElementById('authModalTitle').textContent = 'Cadastrar';
-            }
-        }
-
-        function login() {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            if(email && password) {
-                alert('Login realizado com sucesso!');
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('authModal')) {
                 closeAuthModal();
-            } else {
-                alert('Por favor, preencha todos os campos.');
             }
         }
-
-        function register() {
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirm = document.getElementById('register-confirm').value;
-            
-            if(!name || !email || !password || !confirm) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-            
-            if(password !== confirm) {
-                alert('As senhas não coincidem.');
-                return;
-            }
-            
-            alert('Cadastro realizado com sucesso! Faça login para continuar.');
-            switchAuthForm('login');
-        }
-
-        function showForgotPassword() {
-            alert('Um e-mail de recuperação será enviado para o endereço cadastrado.');
-        }
-
-       
-        function openHelpModal() {
-            document.getElementById('helpModal').style.display = 'flex';
-        }
-
-        function closeHelpModal() {
-            document.getElementById('helpModal').style.display = 'none';
-        }
-
-        
-        function loadData() {
-            alert('Aqui você pode inserir manualmente os dados para o gráfico.\n\nEm uma versão completa, implementaríamos um editor de dados ou upload de arquivo.');
-        }
-
-        function saveAnalysis() {
-            const name = document.getElementById('project-name').value;
-            if(name) {
-                alert("Análise "+name+" salva com sucesso!");
-            } else {
-                alert('Por favor, dê um nome à sua análise antes de salvar.');
-            }
-        }
-
-        function resetAnalysis() {
-            if(confirm('Tem certeza que deseja redefinir esta análise? Todos os dados não salvos serão perdidos.')) {
-                document.getElementById('project-name').value = '';
-                document.getElementById('project-description').value = '';
-                document.getElementById('wavelength-range').value = '';
-                updateGraphPlaceholder();
-            }
-        }
-
-        function exportAnalysis() {
-            alert('Exportando análise...\n\nEm uma versão completa, implementaríamos exportação para PNG, PDF ou CSV.');
-        }
-
-        
-        showHome();
     </script>
 </body>
 </html>

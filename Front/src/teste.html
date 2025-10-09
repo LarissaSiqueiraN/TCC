@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exemplo Chart.js — Gráfico de Linhas 2D a partir de JSON</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 20px; background: #f7f9fc; color: #222; }
+    .card { background: #fff; border-radius: 12px; box-shadow: 0 6px 18px rgba(20,30,60,0.08); padding: 18px; max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 20px; margin: 0 0 12px 0; }
+    canvas { width: 100% !important; height: 420px !important; }
+    .controls { display:flex; gap:8px; margin-top:12px; align-items:center; }
+    button { padding:8px 12px; border-radius:8px; border: none; cursor:pointer; background:#1a73e8; color:white; }
+    pre { background:#f3f6fb; padding:10px; border-radius:8px; overflow:auto; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Gráfico de Linhas (Chart.js) — dados carregados a partir de um JSON</h1>
+    <p>Exemplo completo: HTML + JavaScript. O JSON contém labels (10 pontos) e 4 séries (cada uma com 10 valores).</p>
+
+    <canvas id="myChart"></canvas>
+
+    <div class="controls">
+      <button id="randomize">Randomizar dados</button>
+      <button id="toggleSmooth">Alternar curvatura</button>
+      <span style="margin-left:auto; font-size:13px; color:#666">Chart.js via CDN</span>
+    </div>
+
+    <h3 style="margin-top:18px">JSON usado</h3>
+    <pre id="jsonView"></pre>
+  </div>
+
+  <!-- Chart.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // --- Exemplo de JSON com labels e 4 séries ---
+    const jsonData = {
+      "labels": ["P1","P2","P3","P4","P5","P6","P7","P8","P9","P10"],
+      "series": [
+        { "name": "Linha A", "data": [12, 19, 3, 5, 2, 3, 14, 9, 7, 11] },
+        { "name": "Linha B", "data": [8, 11, 13, 9, 6, 15, 10, 6, 12, 4] },
+        { "name": "Linha C", "data": [5, 7, 9, 14, 12, 8, 6, 4, 10, 13] },
+        { "name": "Linha D", "data": [3, 6, 4, 8, 16, 11, 7, 5, 9, 15] }
+      ]
+    };
+
+    // Mostra o JSON na página (para referência)
+    document.getElementById('jsonView').textContent = JSON.stringify(jsonData, null, 2);
+
+    // Paleta de cores (bordas). Você pode editar conforme desejar.
+    const palette = [
+      'rgb(26,115,232)', // azul
+      'rgb(219,68,55)',  // vermelho
+      'rgb(15,157,88)',  // verde
+      'rgb(244,180,0)'   // amarelo
+    ];
+
+    // Converte o JSON em dataset para Chart.js
+    function datasetsFromJson(json) {
+      return json.series.map((serie, i) => ({
+        label: serie.name,
+        data: serie.data,
+        fill: false,
+        tension: 0.4, // curvatura das linhas (0 = reta, até 1 curva)
+        borderColor: palette[i % palette.length],
+        backgroundColor: palette[i % palette.length],
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2
+      }));
+    }
+
+    // Configura o objeto data e options do Chart.js
+    const config = {
+      type: 'line',
+      data: {
+        labels: jsonData.labels,
+        datasets: datasetsFromJson(jsonData)
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'top' },
+          tooltip: { enabled: true }
+        },
+        scales: {
+          x: {
+            display: true,
+            title: { display: true, text: 'Pontos (labels)' }
+          },
+          y: {
+            display: true,
+            title: { display: true, text: 'Valor' },
+            suggestedMin: 0
+          }
+        }
+      }
+    };
+
+    // Cria o gráfico
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, config);
+
+    // Botões de interação — randomizar dados (exemplo) e alternar curvatura
+    document.getElementById('randomize').addEventListener('click', () => {
+      // Substitui cada valor por um número aleatório entre 0 e 20
+      config.data.datasets.forEach(ds => {
+        ds.data = ds.data.map(() => Math.floor(Math.random() * 21));
+      });
+      // Atualiza também o JSON mostrado
+      jsonData.series.forEach((s,i) => s.data = config.data.datasets[i].data.slice());
+      document.getElementById('jsonView').textContent = JSON.stringify(jsonData, null, 2);
+      myChart.update();
+    });
+
+    let smooth = true;
+    document.getElementById('toggleSmooth').addEventListener('click', () => {
+      smooth = !smooth;
+      config.data.datasets.forEach(ds => ds.tension = smooth ? 0.4 : 0);
+      myChart.update();
+    });
+
+    // Função auxiliar (quando quiser montar o gráfico a partir de um JSON vindo de uma API):
+    // fetch('/dados').then(r => r.json()).then(data => {
+    //   config.data.labels = data.labels;
+    //   config.data.datasets = datasetsFromJson(data);
+    //   myChart.update();
+    // });
+
+  </script>
+</body>
+</html>

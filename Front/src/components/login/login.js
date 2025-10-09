@@ -15,11 +15,11 @@ function login() {
   console.log("Senha:", senha);
   // ...enviar para backend ou outras ações
 }
-
+/// regra 
 function validarEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const alerta = document.getElementById("login-alert");
-
+/// validar 
   if (!emailRegex.test(email)) {
     if (alerta) {
       alerta.textContent = "Por favor, insira um e-mail válido.";
