@@ -6,7 +6,7 @@
     font-size: 2rem;
   "
 >
-  Tipos de Gráficos
+  Tipo de Gráfico
 </h2>
 <p
   style="
@@ -32,16 +32,8 @@
       de onda em análises espectroscópicas.
     </p>
   </div>
-  <div class="graph-card" onclick="cadastrarAnalise('barra')">
-    <div class="graph-icon">
-      <i class="fas fa-chart-bar"></i>
-    </div>
-    <h3>Gráfico de Barras</h3>
-    <p>
-      Perfeito para comparar intensidades entre diferentes amostras ou condições
-      experimentais.
-    </p>
-  </div>
+
+  
   <!-- <div class="graph-card" onclick="cadastrarAnalise('pie')">
     <div class="graph-icon">
       <i class="fas fa-chart-pie"></i>
@@ -51,5 +43,15 @@
       Excelente para representar composições percentuais de componentes
       espectrais em sua amostra.
     </p>
-  </div> -->
+  </div> -->
 </div>
+<script> 
+  function cadastrarAnalise(tipo) {
+    // Salva o tipo no localStorage
+    localStorage.setItem('tipoGraficoSelecionado', tipo);
+
+    // Redireciona para a tela de cadastro
+    window.location.href = 'cadastro.html';
+}
+
+</script>

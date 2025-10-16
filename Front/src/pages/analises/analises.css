@@ -1,55 +1,109 @@
+/* Definições de cores (ajuste se suas variáveis --primary-blue, etc., forem diferentes) */
+:root {
+    --primary-blue: #007bff;
+    --primary-dark-blue: #0056b3;
+    --light-blue: #e6f0ff;
+    --white: #ffffff;
+    --dark-gray: #555;
+    --light-gray: #f4f4f4;
+}
+
+/* ----------------------------------------------------------------
+   ESTILOS PARA O UPLOAD DE ARQUIVOS (O BOTÃO ESTILIZADO)
+   ---------------------------------------------------------------- */
+
+/* 1. Oculta o input type="file" original de forma funcional */
+#fileInput {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+/* 2. Estiliza o rótulo (LABEL) para parecer um botão clicável */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px; /* Arredondamento um pouco mais suave */
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra mais destacada */
+}
+
+/* Efeito Hover e Ativo para feedback visual */
+.custom-file-upload:hover {
+    background-color: var(--primary-dark-blue);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.custom-file-upload:active {
+    transform: translateY(1px);
+}
+
+
+/* ----------------------------------------------------------------
+   ESTILOS ORIGINAIS PARA OS CARDS (TIPOS DE GRÁFICO)
+   ---------------------------------------------------------------- */
+
 .graph-types {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin: 3rem 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 3rem 0;
 }
 
 .graph-card {
-  background-color: var(--white);
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  padding: 2rem;
-  width: 320px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-align: center;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    width: 320px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .graph-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .graph-card h3 {
-  margin-bottom: 1rem;
-  color: var(--primary-blue);
-  font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--primary-blue);
+    font-size: 1.4rem;
 }
 
 .graph-card p {
-  color: var(--dark-gray);
-  line-height: 1.6;
+    color: var(--dark-gray);
+    line-height: 1.6;
 }
 
 .graph-icon {
-  font-size: 3.5rem;
-  color: var(--primary-blue);
-  margin-bottom: 1.5rem;
-  background-color: var(--light-blue);
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  margin: 0 auto 1.5rem;
+    font-size: 3.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1.5rem;
+    background-color: var(--light-blue);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
 }
 
 @media (max-width: 768px) {
-  .graph-card {
-    width: 100%;
-  }
+    .graph-card {
+        width: 100%;
+    }
 }

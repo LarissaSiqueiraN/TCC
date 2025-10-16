@@ -18,5 +18,7 @@ namespace DAL.Models
         [Required]
         public DateTime DataCadastro { get; set; }
 
+        public DateTime UltimoLogin { get; set; }
+
     }
 }

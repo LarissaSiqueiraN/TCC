@@ -1,10 +1,11 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="dashboard" id="analysisDashboard">
   <div class="dashboard-header">
     <h2 class="dashboard-title">Nova Análise</h2>
     <div>
-      <button class="btn btn-outline" onclick="openHelpModal()">
-        <i class="fas fa-question-circle"></i> Ajuda
-      </button>
       <button class="btn btn-primary" onclick="saveAnalysis()">
         <i class="fas fa-save"></i> Salvar
       </button>
@@ -32,43 +33,48 @@
   </div>
 
   <div class="graph-controls">
-    <div class="control-group">
-      <label for="graph-type">Tipo de Gráfico</label>
-      <select id="graph-type" onchange="updateGraphPlaceholder()">
-        <option value="linha">Linha</option>
-        <option value="barra">Barras</option>
-        <!-- <option value="pie">Setor</option> -->
-      </select>
-    </div>
-    <div class="control-group">
-      <label for="wavelength-range">Faixa de Comprimento de Onda (nm)</label>
-      <input type="text" id="wavelength-range" placeholder="Ex: 200-800" />
-    </div>
+  <div class="control-group">
+    <label for="nm-input">Comprimento de Onda (nm)</label>
+    <input type="text" id="nm-input" placeholder="Ex: 400,401,402" />
   </div>
+  <div class="control-group">
+    <label for="abs-input">Absorbância (Abs)</label>
+    <input type="text" id="abs-input" placeholder="Ex: 0.1,0.12,0.15" />
+  </div>
+  <div class="control-group">
+    <label for="graph-type">Tipo de Gráfico</label>
+    <select id="graph-type">
+      <option value="line">Linha</option>
+    </select>
+  </div>
+</div>
+</div>
 
   <div class="graph-container">
-    <div class="graph-placeholder">
-      <i class="fas fa-chart-area"></i>
-      <p>Selecione um tipo de gráfico e carregue os dados para visualização</p>
-      <button
-        class="btn btn-primary"
-        style="padding: 0.8rem 2rem; margin-top: 1rem"
-        onclick="loadData()"
-      >
-        <i class="fas fa-upload"></i> Carregar Dados
-      </button>
-    </div>
+  <!-- placeholder que você pode esconder quando o gráfico for renderizado -->
+  <div class="graph-placeholder" id="placeholder">
+    <i class="fas fa-chart-area"></i>
+    <p>Selecione um tipo de gráfico e carregue os dados para visualização</p>
+    <button class="btn btn-primary" id="btnUpload" style="padding: 0.8rem 2rem; margin-top: 1rem">
+      <i class="fas fa-upload"></i> Carregar Dados
+    </button>
+    <input type="file" id="fileInput" accept=".csv, .xlsx, .xls" style="display: none;">
   </div>
 
+  <!-- canvas para o Chart.js -->
+  <canvas id="uvVisChart" style="display:none;"></canvas>
+</div>
+
+
   <div class="action-buttons">
-    <button class="btn btn-outline" onclick="showGraphSelection()">
-      <i class="fas fa-arrow-left"></i> Voltar
-    </button>
     <button class="btn btn-outline" onclick="resetAnalysis()">
       <i class="fas fa-redo"></i> Redefinir
     </button>
-    <button class="btn btn-primary" onclick="exportAnalysis()">
-      <i class="fas fa-file-export"></i> Exportar
-    </button>
+    <button class="btn btn-outline" id="togglePointsBtn">
+  Mostrar Picos
+</button>
+
+
   </div>
 </div>
+
