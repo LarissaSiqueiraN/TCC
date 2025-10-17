@@ -3,7 +3,7 @@ using Business.Intefaces;
 using Business.Services.Base;
 using Business.Services.Interfaces;
 using DAL.Models;
-using DAL.Repository;
+using DAL.Repository.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 

@@ -1,5 +1,5 @@
 <!-- Modal de Autenticação -->
-<div class="modal" id="authModal" style="display: none;">
+<div class="modal" id="authModal" style="display: none">
   <div class="modal-content">
     <div class="modal-header">
       <h2 id="authModalTitle">Entrar</h2>
@@ -8,13 +8,8 @@
     <div class="modal-body">
       <form id="loginForm" class="auth-form active">
         <div class="form-group">
-          <label for="login-email">E-mail</label>
-          <input
-            type="email"
-            id="login-email"
-            placeholder="seu@email.com"
-            required
-          />
+          <label for="login">Login</label>
+          <input type="text" id="login" placeholder="Login" required />
         </div>
         <div class="form-group">
           <label for="login-password">Senha</label>
@@ -25,7 +20,7 @@
             required
           />
         </div>
-        <div style="text-align: right; margin-top: 0.5rem">
+        <!-- <div style="text-align: right; margin-top: 0.5rem">
           <a
             href="#"
             style="
@@ -36,16 +31,16 @@
             onclick="showForgotPassword()"
             >Esqueceu a senha?</a
           >
-        </div>
+        </div> -->
 
-        <div id="login-alert" style="color: red; display: none;"></div>
+        <div id="login-alert" style="color: red; display: none"></div>
 
         <div class="auth-actions">
           <button
             type="button"
-            class="btn btn-primary"
-            onclick="login()"
+            class="btn btn-primary btn-entrar"
             style="width: 100%"
+            id="login-button"
           >
             <i class="fas fa-sign-in-alt"></i> Entrar
           </button>
@@ -58,47 +53,59 @@
 
       <form id="registerForm" class="auth-form">
         <div class="form-group">
-          <label for="register-name">Nome Completo</label>
+          <label for="cadastro-name">Nome Completo</label>
           <input
             type="text"
-            id="register-name"
+            id="cadastro-name"
             placeholder="Seu nome completo"
             required
           />
         </div>
         <div class="form-group">
-          <label for="register-email">E-mail</label>
+          <label for="cadastro-name">Login</label>
+          <input
+            type="text"
+            id="cadastro-login"
+            placeholder="Digite seu Login"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="cadastro-email">E-mail</label>
           <input
             type="email"
-            id="register-email"
+            id="cadastro-email"
             placeholder="seu@email.com"
             required
           />
         </div>
         <div class="form-group">
-          <label for="register-password">Senha</label>
+          <label for="cadastro-password">Senha</label>
           <input
             type="password"
-            id="register-password"
+            id="cadastro-password"
             placeholder="Mínimo 8 caracteres"
             required
           />
         </div>
         <div class="form-group">
-          <label for="register-confirm">Confirmar Senha</label>
+          <label for="cadastro-confirm">Confirmar Senha</label>
           <input
             type="password"
-            id="register-confirm"
+            id="cadastro-confirm"
             placeholder="Confirme sua senha"
             required
           />
         </div>
+        
+        <div id="cadastro-alert" style="color: red; display: none"></div>
+
         <div class="auth-actions">
           <button
             type="button"
             class="btn btn-primary"
-            onclick="register()"
-            style="width: 100%"
+            id="cadastro-button"
+            style="width: 100%; justify-content: center;"
           >
             <i class="fas fa-user-plus"></i> Cadastrar
           </button>

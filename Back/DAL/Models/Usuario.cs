@@ -5,9 +5,12 @@ namespace DAL.Models
 {
     public class Usuario : IdentityUser
     {
-        public override string Email { get; set; }
 
         [MaxLength(255)]
+        [Required]
+        public override string Email { get; set; }
+
+        [MaxLength(50)]
         [Required]
         public string Nome {  get; set; }
 

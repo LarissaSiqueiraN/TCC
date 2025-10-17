@@ -17,7 +17,7 @@ using System.Text;
 namespace GestaoDePlantao.Controllers.V1
 {
     [ApiVersion("1.0")]
-    [Route("api/[controller]/v{version:apiVersion}")]
+    [Route("api/[controller]")]
     public class AuthController : BaseController
     {
         private readonly UserManager<Usuario> _userManager;
@@ -66,6 +66,7 @@ namespace GestaoDePlantao.Controllers.V1
                 var user = new Usuario();
 
                 user.Nome = registerUser.Nome;
+                user.UserName = registerUser.Login;
                 user.Email = registerUser.Email;
                 user.DataCadastro = DateTime.Now;
 
@@ -209,7 +210,7 @@ namespace GestaoDePlantao.Controllers.V1
             {
                 if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-                var result = await _signInManager.PasswordSignInAsync(loginUser.login, loginUser.password, false, true);
+                var result = await _signInManager.PasswordSignInAsync(loginUser.login, loginUser.senha, false, true);
 
                 if (result.Succeeded)
                 {

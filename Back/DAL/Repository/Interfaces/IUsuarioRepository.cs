@@ -1,7 +1,7 @@
 ﻿using DAL.Models;
-using DAL.Repository.Base;
+using DAL.Repository.Base.Interfaces;
 
-namespace DAL.Repository
+namespace DAL.Repository.Interfaces
 {
     public interface IUsuarioRepository : IRepository<Usuario>
     {

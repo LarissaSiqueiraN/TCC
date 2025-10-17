@@ -1,4 +1,10 @@
-﻿using DAL;
+﻿using Business.Intefaces;
+using Business.Notificacoes;
+using Business.Services;
+using Business.Services.Interfaces;
+using DAL;
+using DAL.Repository;
+using DAL.Repository.Interfaces;
 
 namespace API.Configuration
 {
@@ -7,6 +13,12 @@ namespace API.Configuration
         public static IServiceCollection ResolveDependencies(this IServiceCollection services)
         {
             services.AddScoped<BancoAPIContext>();
+
+            services.AddScoped<INotificador, Notificador>();
+
+            services.AddScoped<IUsuarioService, UsuarioService>();
+
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             return services;
         }

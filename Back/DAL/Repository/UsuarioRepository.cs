@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using DAL.Repository.Base;
+using DAL.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
