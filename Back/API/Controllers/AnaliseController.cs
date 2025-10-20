@@ -53,5 +53,20 @@ namespace API.Controllers
                 return CustomResponse();
             }
         }
+
+        [HttpDelete("{analiseId}")]
+        public async Task<ActionResult> Excluir(int analiseId)
+        {
+            try
+            {
+                // Implementar lógica de deleção aqui
+                return CustomResponse(await _analiseService.Excluir(analiseId));
+            }
+            catch (Exception ex)
+            {
+                NotificarErro("Ocorreu um erro ao deletar a análise.");
+                return CustomResponse();
+            }
+        }
     }
 }

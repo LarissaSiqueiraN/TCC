@@ -58,5 +58,26 @@ namespace Business.Services
                 throw ex;
             }
         }
+        public async Task<bool> Excluir(int analiseId)
+        {
+            try
+            {
+                var analise = await _analiseRepository.Buscar(a => a.Id == analiseId);
+
+                if (analise == null)
+                {
+                    Notificar("Análise não encontrada.");
+                    return false;
+                }
+
+                await _analiseRepository.Remover(analiseId);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Notificar(ex, "Ocorreu um erro ao excluir a análise.", _logger);
+                throw ex;
+            }
+        }
     }
 }

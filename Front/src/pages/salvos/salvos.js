@@ -45,6 +45,7 @@ async function loadSavedAnalyses() {
         }
 
         loadedAnalyses.forEach((analysis, index) => {
+
             const card = document.createElement('div');
             card.className = 'graph-card';
             const uniqueId = analysis.id !== undefined ? analysis.id : index;

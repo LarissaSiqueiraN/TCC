@@ -7,5 +7,7 @@ namespace Business.Services.Interfaces
         Task<AnaliseDto> Cadastrar(AnaliseViewModel model);
 
         Task<IEnumerable<AnaliseDto>> GetAnalisesByUsuario(string usuarioId);
+
+        Task<bool> Excluir(int analiseId);
     }
 }

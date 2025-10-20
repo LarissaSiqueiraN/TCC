@@ -28,6 +28,7 @@ namespace DAL.DTOs
 
     public class AnaliseDto
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public string RotuloX { get; set; }
