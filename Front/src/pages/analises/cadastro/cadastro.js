@@ -2,6 +2,9 @@
 window.uvVisChart = null;
 window.currentLabels = [];
 window.currentData = [];
+// Variáveis para armazenar os rótulos dos eixos, com valores padrão
+window.rotuloX = "Comprimento de Onda (nm)";
+window.rotuloY = "Absorbância (Abs)";
 
 // Tipo de gráfico fixo
 window.tipoGrafico = 'line';
@@ -16,6 +19,15 @@ function gerarGrafico() {
         return;
     }
 
+
+    const maxValor = Math.max(...window.currentData);
+    const maxIndex = window.currentData.indexOf(maxValor);
+
+  
+    const picoData = new Array(window.currentData.length).fill(null);
+    picoData[maxIndex] = maxValor;
+
+
     placeholder.style.display = 'none';
     canvas.style.display = 'block';
 
@@ -28,7 +40,7 @@ function gerarGrafico() {
         data: {
             labels: window.currentLabels.map(x => parseFloat(x).toFixed(1)),
             datasets: [{
-                label: 'Absorbância',
+                label: window.rotuloY, 
                 data: window.currentData,
                 borderColor: 'rgba(43, 43, 232, 1)',
                 backgroundColor: 'transparent',
@@ -36,6 +48,16 @@ function gerarGrafico() {
                 fill: false,
                 tension: 0.1,
                 pointRadius: 0
+            },
+            {
+                label: 'Pico mais alto', 
+                data: picoData,
+                backgroundColor: 'black',
+                borderColor: 'black',
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                showLine: false, 
+                type: 'line'
             }]
         },
         options: {
@@ -44,13 +66,13 @@ function gerarGrafico() {
             scales: {
                 x: {
                     type: 'linear',
-                    title: { display: true, text: 'Wavelength (nm)' },
+                    title: { display: true, text: window.rotuloX }, 
                     reverse: true,
                     offset: true,
-                    ticks: { autoSkip: false }
+                    ticks: { autoSkip: false, maxTicksLimit: 40  }
                 },
                 y: {
-                    title: { display: true, text: 'Absorbance (Abs)' },
+                    title: { display: true, text: window.rotuloY },
                     beginAtZero: true,
                     suggestedMax: Math.max(...window.currentData) * 1.1
                 }
@@ -58,7 +80,6 @@ function gerarGrafico() {
         }
     });
 }
-
 // Redefinir análise
 function resetAnalysis() {
     document.getElementById('project-name').value = '';
@@ -69,6 +90,9 @@ function resetAnalysis() {
 
     window.currentLabels = [];
     window.currentData = [];
+    // Reseta os rótulos para os valores padrão
+    window.rotuloX = "Comprimento de Onda (nm)";
+    window.rotuloY = "Absorbância (Abs)";
 
     if (window.uvVisChart) {
         window.uvVisChart.destroy();
@@ -86,7 +110,8 @@ function exportCSV() {
         return;
     }
 
-    let csvContent = "data:text/csv;charset=utf-8,Wavelength (nm),Absorbance (Abs)\n";
+    // Usa os rótulos capturados no cabeçalho do CSV
+    let csvContent = `data:text/csv;charset=utf-8,${window.rotuloX},${window.rotuloY}\n`;
     for (let i = 0; i < window.currentLabels.length; i++) {
         csvContent += `${window.currentLabels[i]},${window.currentData[i]}\n`;
     }
@@ -109,20 +134,20 @@ window.addEventListener('DOMContentLoaded', function() {
     const btnConfig = document.getElementById('btnConfig');
     const btnExport = document.getElementById('btnExport');
 
-    // Abrir explorador de arquivos
+
     btnCarregar.addEventListener('click', function(e) {
         e.preventDefault();
         fileInput.click();
     });
 
-    // Ler arquivos CSV ou Excel
+
     fileInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (!file) return;
 
         const fileName = file.name.toLowerCase();
-        window.currentLabels = [];
-        window.currentData = [];
+        // Limpa os dados antes de carregar um novo arquivo
+        // resetAnalysis();
 
         if (fileName.endsWith('.csv')) {
             Papa.parse(file, {
@@ -130,9 +155,19 @@ window.addEventListener('DOMContentLoaded', function() {
                 skipEmptyLines: true,
                 delimiter: ";",
                 complete: function(results) {
-                    results.data.forEach(row => {
-                        window.currentLabels.push(row[0].replace(',', '.'));
-                        window.currentData.push(row[1]);
+                    if (results.data.length < 2) {
+                        alert("O arquivo CSV precisa ter um cabeçalho e pelo menos uma linha de dados.");
+                        return;
+                    }
+                    // **Captura os rótulos da primeira linha**
+                    window.rotuloX = results.data[0][0] || "Eixo X";
+                    window.rotuloY = results.data[0][1] || "Eixo Y";
+
+                    // Pega os dados a partir da segunda linha
+                    const dataRows = results.data.slice(1);
+                    dataRows.forEach(row => {
+                        window.currentLabels.push(String(row[0]).replace(',', '.'));
+                        window.currentData.push(String(row[1]).replace(',', '.'));
                     });
 
                     // Validação de números
@@ -141,8 +176,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     );
                     if (invalidData) {
                         alert('O arquivo contém valores inválidos! Todos os valores devem ser números.');
-                        window.currentLabels = [];
-                        window.currentData = [];
+                        resetAnalysis();
                         return;
                     }
 
@@ -164,9 +198,21 @@ window.addEventListener('DOMContentLoaded', function() {
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     const excelData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
+                    if (excelData.length < 2) {
+                        alert("O arquivo Excel precisa ter um cabeçalho e pelo menos uma linha de dados.");
+                        return;
+                    }
+
+                    // **Captura os rótulos da primeira linha**
+                    window.rotuloX = excelData[0][0] || "Eixo X";
+                    window.rotuloY = excelData[0][1] || "Eixo Y";
+
+                    // Pega os dados a partir da segunda linha
                     for (let i = 1; i < excelData.length; i++) {
-                        window.currentLabels.push(excelData[i][0]);
-                        window.currentData.push(excelData[i][1]);
+                        if (excelData[i] && excelData[i][0] !== undefined && excelData[i][1] !== undefined) {
+                            window.currentLabels.push(excelData[i][0]);
+                            window.currentData.push(excelData[i][1]);
+                        }
                     }
 
                     // Validação de números
@@ -175,8 +221,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     );
                     if (invalidData) {
                         alert('O arquivo contém valores inválidos! Todos os valores devem ser números.');
-                        window.currentLabels = [];
-                        window.currentData = [];
+                        resetAnalysis();
                         return;
                     }
 
@@ -229,6 +274,10 @@ window.addEventListener('DOMContentLoaded', function() {
         // Transformar em números e gerar gráfico
         window.currentLabels = nmArray.map(x => parseFloat(x));
         window.currentData = absArray.map(x => parseFloat(x));
+        
+        // Usa os rótulos padrão para entrada manual
+        window.rotuloX = "Comprimento de Onda (nm)";
+        window.rotuloY = "Absorbância (Abs)";
 
         gerarGrafico();
     });
@@ -251,42 +300,93 @@ togglePointsBtn.addEventListener('click', () => {
         ? 'rgba(43, 43, 232, 1)'
         : 'rgba(43, 43, 232, 0)';
 
-    togglePointsBtn.innerText = picosVisiveis ? 'Ocultar Picos' : 'Mostrar Picos';
-
+    if (picosVisiveis) {
+        togglePointsBtn.innerHTML = '<i class="fas fa-search-minus"></i> Ocultar Picos';
+    } else {
+        togglePointsBtn.innerHTML = '<i class="fas fa-search-plus"></i> Mostrar Picos';
+    }
+    
     window.uvVisChart.update();
 });
 
-function saveAnalysis() {
-    const name = document.getElementById('project-name').value.trim();
-    const description = document.getElementById('project-description').value.trim();
+async function saveAnalysis() {
+    const saveButton = document.getElementById('btnSave');
+    const originalButtonContent = saveButton ? saveButton.innerHTML : '';
 
-    if (!name || !window.currentLabels.length || !window.currentData.length) {
-        alert('Preencha o nome e carregue os dados do gráfico antes de salvar.');
+    if (saveButton) {
+        saveButton.disabled = true;
+        saveButton.innerHTML = `Salvando <span class="loading-dots"></span>`;
+    }
+
+
+    const token = localStorage.getItem('token');
+    
+    console.log("Token recuperado:", token);
+
+    if (!token) {
+        alert('Você precisa estar logado para salvar análises.');
+        return;
+    }
+    
+    const nome = document.getElementById('project-name').value.trim();
+    const descricao = document.getElementById('project-description').value.trim();
+  
+    if (!window.currentLabels || window.currentLabels.length === 0) {
+        alert("Não há dados carregados no gráfico para salvar.");
         return;
     }
 
-    // Pega a imagem do gráfico
-    const canvas = document.getElementById('uvVisChart');
-    const imageBase64 = canvas.toDataURL('image/png'); // imagem do gráfico
+    const dados = window.currentLabels.map((valorX, index) => ({
+        ValorX: valorX,
+        ValorY: window.currentData[index],
+    }));
 
-    const analysis = {
-        id: Date.now(), // ID único
-        name,
-        description,
-        labels: window.currentLabels,
-        data: window.currentData,
-        image: imageBase64,
-        createdAt: new Date().toISOString()
+    const analiseParaSalvar = {
+        Nome: nome,
+        Descricao: descricao,
+        // **Usa os rótulos capturados do arquivo**
+        RotuloX: window.rotuloX,
+        RotuloY: window.rotuloY,
+        Dados: dados,
     };
 
-    // Pega o array de análises salvas no localStorage
-    let savedAnalyses = JSON.parse(localStorage.getItem('savedAnalyses') || '[]');
+ 
+  console.log("Enviando para a API:", analiseParaSalvar);
 
-    // Adiciona a nova análise
-    savedAnalyses.push(analysis);
+  // 6. Enviar a requisição para a API
+  try {
+    const response = await fetch("http://localhost:5000/api/Analise", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(analiseParaSalvar),
+    });
 
-    // Salva novamente
-    localStorage.setItem('savedAnalyses', JSON.stringify(savedAnalyses));
+    if (!response.ok) {
+      if (response.status === 401) {
+        alert("Sua sessão expirou. Por favor, faça o login novamente.");
+        logout(); 
+        return; 
+      }
+      
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Ocorreu um erro ao salvar a análise.");
+    }
 
-    alert('Análise salva com sucesso! Agora você pode visualizá-la na página de Salvos.');
+    alert("Análise salva com sucesso!");
+    window.location.href = '/salvos';
+    resetAnalysis();
+
+  } catch (error) {
+    console.error("Erro ao salvar a análise:", error);
+    alert(`Falha ao salvar: ${error.message}`);
+  }
+  finally {
+        if (saveButton) {
+            saveButton.disabled = false;
+            saveButton.innerHTML = originalButtonContent;
+        }
+    }
 }

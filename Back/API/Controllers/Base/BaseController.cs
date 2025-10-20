@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
 
-namespace GestaoDePlantao.Controllers.Base
+namespace Controllers.Base
 {
     [Route("api/[controller]")]
     [ApiController]

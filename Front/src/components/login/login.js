@@ -148,7 +148,7 @@ async function login() {
 }
 
 function validarSenha(senha, confirmarSenha) {
-  const alerta = document.getElementById("login-alert");
+  const alerta = document.getElementById("cadastro-alert");
 
   if (senha !== confirmarSenha) {
     if (alerta){
@@ -164,7 +164,7 @@ function validarSenha(senha, confirmarSenha) {
 
 function validarEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const alerta = document.getElementById("login-alert");
+  const alerta = document.getElementById("cadastro-alert");
 
   if (!emailRegex.test(email)) {
     if (alerta) {

@@ -6,7 +6,7 @@
   <div class="dashboard-header">
     <h2 class="dashboard-title">Nova Análise</h2>
     <div>
-      <button class="btn btn-primary" onclick="saveAnalysis()">
+      <button class="btn btn-primary" id="btnSave" onclick="saveAnalysis()">
         <i class="fas fa-save"></i> Salvar
       </button>
     </div>
@@ -16,41 +16,34 @@
     <h3>Informações da Análise</h3>
     <div class="form-group">
       <label for="project-name">Nome da Análise</label>
-      <input
-        type="text"
-        id="project-name"
-        placeholder="Ex: Espectro UV-Vis Amostra A"
-      />
+      <input type="text" id="project-name" placeholder="Ex: Espectro UV-Vis Amostra A" />
     </div>
     <div class="form-group">
       <label for="project-description">Descrição</label>
-      <textarea
-        id="project-description"
-        rows="3"
-        placeholder="Detalhes sobre a análise, condições experimentais..."
-      ></textarea>
+      <textarea id="project-description" rows="3"
+        placeholder="Detalhes sobre a análise, condições experimentais..."></textarea>
     </div>
   </div>
 
   <div class="graph-controls">
-  <div class="control-group">
-    <label for="nm-input">Comprimento de Onda (nm)</label>
-    <input type="text" id="nm-input" placeholder="Ex: 400,401,402" />
+    <div class="control-group">
+      <label for="nm-input">Comprimento de Onda (nm)</label>
+      <input type="text" id="nm-input" placeholder="Ex: 400,401,402" />
+    </div>
+    <div class="control-group">
+      <label for="abs-input">Absorbância (Abs)</label>
+      <input type="text" id="abs-input" placeholder="Ex: 0.1,0.12,0.15" />
+    </div>
+    <div class="control-group">
+      <label for="graph-type">Tipo de Gráfico</label>
+      <select id="graph-type">
+        <option value="line">Linha</option>
+      </select>
+    </div>
   </div>
-  <div class="control-group">
-    <label for="abs-input">Absorbância (Abs)</label>
-    <input type="text" id="abs-input" placeholder="Ex: 0.1,0.12,0.15" />
-  </div>
-  <div class="control-group">
-    <label for="graph-type">Tipo de Gráfico</label>
-    <select id="graph-type">
-      <option value="line">Linha</option>
-    </select>
-  </div>
-</div>
 </div>
 
-  <div class="graph-container">
+<div class="graph-container">
   <!-- placeholder que você pode esconder quando o gráfico for renderizado -->
   <div class="graph-placeholder" id="placeholder">
     <i class="fas fa-chart-area"></i>
@@ -66,15 +59,11 @@
 </div>
 
 
-  <div class="action-buttons">
-    <button class="btn btn-outline" onclick="resetAnalysis()">
-      <i class="fas fa-redo"></i> Redefinir
-    </button>
-    <button class="btn btn-outline" id="togglePointsBtn">
-  Mostrar Picos
-</button>
-
-
-  </div>
+<div class="action-buttons">
+  <button class="btn btn-outline" onclick="resetAnalysis()">
+    <i class="fas fa-redo"></i> Redefinir
+  </button>
+  <button class="btn btn-outline" id="togglePointsBtn">
+    <i class="fas fa-search-plus"></i> Mostrar Picos
+  </button>
 </div>
-

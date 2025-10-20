@@ -151,3 +151,26 @@
     width: 100%;
   }
 }
+
+
+/* --- ADICIONE ESTE CÓDIGO NO FINAL DO ARQUIVO --- */
+@keyframes dots {
+  0%, 20% {
+    content: 'o..';
+  }
+  40%, 60% {
+    content: '.o.';
+  }
+  80%, 100% {
+    content: '..o';
+  }
+}
+
+.loading-dots::before {
+  content: 'o..';
+  animation: dots 1.5s infinite;
+  display: inline-block;
+  width: 2em; /* Evita que o botão mude de tamanho */
+  text-align: center;
+  color: inherit; /* Herda a cor do botão */
+}

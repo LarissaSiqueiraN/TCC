@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DAL.DTOs;
+using DAL.Models;
 
 namespace API.Extensions
 {
@@ -6,7 +8,9 @@ namespace API.Extensions
     {
         public AutoMapperProfile()
         {
-
+            CreateMap<AnaliseViewModel, Analise>().ReverseMap();
+            CreateMap<AnaliseDto, Analise>().ReverseMap();
+            CreateMap<AnaliseDadosDto, AnaliseDados>().ReverseMap();
         }
     }
 }

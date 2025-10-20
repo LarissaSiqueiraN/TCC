@@ -1,4 +1,7 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace API.Configuration
 {
@@ -8,20 +11,19 @@ namespace API.Configuration
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddSwaggerGen( s =>
+            services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "SGP API",
+                    Title = "SGP Api",
                     Description = "Projeto SGP Api",
-                    Contact = new OpenApiContact { Name = "Larissa Siqueira", Email = "larissasiqueiranadir@gmail.com   " }
-
+                    Contact = new OpenApiContact { Name = "Diego Miranda", Email = "diego.miranda@gsw.com.br"}                 
                 });
 
-                s.AddSecurityDefinition("Beares", new OpenApiSecurityScheme
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "Input the JWT Like : Bearer {your token}",
+                    Description = "Input the JWT like: Bearer {your token}",
                     Name = "Authorization",
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
@@ -37,10 +39,10 @@ namespace API.Configuration
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                 Id = "Bearer"
+                                Id = "Bearer"
                             }
                         },
-                        new string[]{}
+                        new string[] {}
                     }
                 });
 

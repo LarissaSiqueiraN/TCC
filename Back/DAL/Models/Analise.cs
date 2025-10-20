@@ -25,9 +25,6 @@ namespace DAL.Models
         public string RotuloY { get; set; }
 
         [Required]
-        public ETipoAnalise Tipo { get; set; }
-
-        [Required]
         public DateTime DataCadastro { get; set; }
 
         [ForeignKey("Usuario")]

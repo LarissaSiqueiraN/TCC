@@ -20,6 +20,10 @@ namespace API.Configuration
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
+            services.AddScoped<IAnaliseService, AnaliseService>();
+
+            services.AddScoped<IAnaliseRepository, AnaliseRepository>();
+
             return services;
         }
     }

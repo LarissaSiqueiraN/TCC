@@ -2,9 +2,9 @@
 using AutoMapper;
 using Business.Intefaces;
 using Business.Services.Interfaces;
+using Controllers.Base;
 using DAL.DTOs;
 using DAL.Models;
-using GestaoDePlantao.Controllers.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace GestaoDePlantao.Controllers.V1
+namespace Controllers.V1
 {
     [ApiVersion("1.0")]
     [Route("api/[controller]")]

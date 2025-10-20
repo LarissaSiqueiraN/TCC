@@ -52,6 +52,14 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+//app.UseHttpsRedirection();
+
+app.UseRouting();
+
+if (app.Environment.IsDevelopment())
+{
     app.UseCors("Development");
 }
 else
@@ -59,9 +67,6 @@ else
     app.UseCors("Production");
 }
 
-app.UseHttpsRedirection();
-
-app.UseRouting();
 
 app.UseAuthentication();
 
