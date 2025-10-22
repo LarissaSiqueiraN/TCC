@@ -18,7 +18,7 @@ namespace API.Controllers
 
         [HttpPost]
         public async Task<ActionResult> Cadastrar(AnaliseViewModel model)
-        {
+        { 
             if (!ModelState.IsValid)
             {
                 NotificarErro("Dados da análise estão incorretos ou incompletos");

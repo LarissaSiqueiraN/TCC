@@ -174,3 +174,57 @@
   text-align: center;
   color: inherit; /* Herda a cor do botão */
 }
+
+.line-controls {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.manual-add-section, .editable-legend {
+    flex: 1;
+}
+
+.manual-add-section h3, .editable-legend h4 {
+    margin-top: 0;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.manual-add-section p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.legend-item input[type="color"] {
+    width: 30px;
+    height: 30px;
+    border: none;
+    padding: 0;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.legend-item span {
+    font-size: 0.9rem;
+}
+
+.add-line-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 1rem;
+}

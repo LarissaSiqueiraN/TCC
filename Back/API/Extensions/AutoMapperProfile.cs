@@ -10,7 +10,8 @@ namespace API.Extensions
         {
             CreateMap<AnaliseViewModel, Analise>().ReverseMap();
             CreateMap<AnaliseDto, Analise>().ReverseMap();
-            CreateMap<AnaliseDadosDto, AnaliseDados>().ReverseMap();
+            CreateMap<AnaliseLinhaDto, AnaliseLinha>().ReverseMap();
+            CreateMap<AnaliseLinhaDadosDto, AnaliseLinhaDados>().ReverseMap();
         }
     }
 }

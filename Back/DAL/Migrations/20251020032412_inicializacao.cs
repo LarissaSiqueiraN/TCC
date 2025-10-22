@@ -77,6 +77,30 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Analises",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    RotuloX = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RotuloY = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fk_Usuario = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Analises", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Analises_AspNetUsers_Fk_Usuario",
+                        column: x => x.Fk_Usuario,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -161,6 +185,63 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AnaliseLinhas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Fk_Analise = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnaliseLinhas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AnaliseLinhas_Analises_Fk_Analise",
+                        column: x => x.Fk_Analise,
+                        principalTable: "Analises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AnaliseLinhaDados",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ValorY = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ValorX = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Fk_AnaliseLinha = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnaliseLinhaDados", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AnaliseLinhaDados_AnaliseLinhas_Fk_AnaliseLinha",
+                        column: x => x.Fk_AnaliseLinha,
+                        principalTable: "AnaliseLinhas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AnaliseLinhaDados_Fk_AnaliseLinha",
+                table: "AnaliseLinhaDados",
+                column: "Fk_AnaliseLinha");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AnaliseLinhas_Fk_Analise",
+                table: "AnaliseLinhas",
+                column: "Fk_Analise");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Analises_Fk_Usuario",
+                table: "Analises",
+                column: "Fk_Usuario");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -205,6 +286,9 @@ namespace DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AnaliseLinhaDados");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -220,7 +304,13 @@ namespace DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AnaliseLinhas");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Analises");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

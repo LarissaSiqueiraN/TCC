@@ -18,7 +18,7 @@ namespace API.Configuration
                     Version = "v1",
                     Title = "SGP Api",
                     Description = "Projeto SGP Api",
-                    Contact = new OpenApiContact { Name = "Diego Miranda", Email = "diego.miranda@gsw.com.br"}                 
+                    Contact = new OpenApiContact { Name = "Larissa Siqueira Nadir", Email = "larissasiqueiranadir@gmail.com"}                 
                 });
 
                 s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

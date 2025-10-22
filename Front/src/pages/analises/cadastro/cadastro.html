@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="graph-controls">
+  <!-- <div class="graph-controls">
     <div class="control-group">
       <label for="nm-input">Comprimento de Onda (nm)</label>
       <input type="text" id="nm-input" placeholder="Ex: 400,401,402" />
@@ -41,8 +41,35 @@
       </select>
     </div>
   </div>
-</div>
+</div> -->
 
+<div class="line-controls">
+    <div class="manual-add-section">
+        <h3>Adicionar Linha</h3>
+        <p>Carregue um arquivo principal primeiro para definir o Eixo X.</p>
+        <div class="form-group">
+            <input type="text" id="new-line-name" placeholder="Nome da Amostra/Linha">
+        </div>
+        <!-- <div class="form-group">
+            <textarea id="new-line-data" rows="3" placeholder="Cole os valores de Y separados por ponto e vírgula (;)"></textarea>
+        </div> -->
+        <!-- Container para os botões de adicionar linha -->
+        <div class="add-line-buttons">
+            <!-- <button id="btn-add-line" class="btn btn-outline">
+                <i class="fas fa-plus"></i> Adicionar Manualmente
+            </button> -->
+            <button id="btn-add-line-file" class="btn btn-outline">
+                <i class="fas fa-file-upload"></i> Adicionar por Arquivo
+            </button>
+            <!-- Input de arquivo escondido para a nova linha -->
+            <input type="file" id="add-line-file-input" accept=".csv, .xlsx, .xls" style="display: none;">
+        </div>
+    </div>
+    <div id="line-legend-container" class="editable-legend">
+        <h4>Legenda Editável</h4>
+        <!-- As legendas com seletores de cor serão inseridas aqui pelo JavaScript -->
+    </div>
+</div>
 <div class="graph-container">
   <!-- placeholder que você pode esconder quando o gráfico for renderizado -->
   <div class="graph-placeholder" id="placeholder">
@@ -64,6 +91,6 @@
     <i class="fas fa-redo"></i> Redefinir
   </button>
   <button class="btn btn-outline" id="togglePointsBtn">
-    <i class="fas fa-search-plus"></i> Mostrar Picos
+    <i class="fas fa-search-plus"></i> Mostrar Bandas
   </button>
 </div>

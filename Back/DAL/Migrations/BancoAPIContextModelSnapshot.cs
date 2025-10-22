@@ -64,10 +64,43 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Usuario");
 
-                    b.ToTable("Analises");
+                    b.ToTable("Analises", (string)null);
                 });
 
-            modelBuilder.Entity("DAL.Models.AnaliseDados", b =>
+            modelBuilder.Entity("DAL.Models.AnaliseLinha", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Cor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("Fk_Analise")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fk_Analise");
+
+                    b.ToTable("AnaliseLinhas", (string)null);
+                });
+
+            modelBuilder.Entity("DAL.Models.AnaliseLinhaDados", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +113,7 @@ namespace DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<int>("Fk_Analise")
+                    b.Property<int>("Fk_AnaliseLinha")
                         .HasColumnType("int");
 
                     b.Property<decimal>("ValorX")
@@ -91,9 +124,9 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Fk_Analise");
+                    b.HasIndex("Fk_AnaliseLinha");
 
-                    b.ToTable("AnalisesDados");
+                    b.ToTable("AnaliseLinhaDados", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Models.Usuario", b =>
@@ -323,15 +356,26 @@ namespace DAL.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("DAL.Models.AnaliseDados", b =>
+            modelBuilder.Entity("DAL.Models.AnaliseLinha", b =>
                 {
                     b.HasOne("DAL.Models.Analise", "Analise")
-                        .WithMany("Dados")
+                        .WithMany("Linhas")
                         .HasForeignKey("Fk_Analise")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Analise");
+                });
+
+            modelBuilder.Entity("DAL.Models.AnaliseLinhaDados", b =>
+                {
+                    b.HasOne("DAL.Models.AnaliseLinha", "AnaliseLinha")
+                        .WithMany("Dados")
+                        .HasForeignKey("Fk_AnaliseLinha")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnaliseLinha");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -386,6 +430,11 @@ namespace DAL.Migrations
                 });
 
             modelBuilder.Entity("DAL.Models.Analise", b =>
+                {
+                    b.Navigation("Linhas");
+                });
+
+            modelBuilder.Entity("DAL.Models.AnaliseLinha", b =>
                 {
                     b.Navigation("Dados");
                 });

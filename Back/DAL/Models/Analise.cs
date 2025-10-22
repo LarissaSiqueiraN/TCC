@@ -1,5 +1,4 @@
-﻿using DAL.ENUM;
-using DAL.Models.Base;
+﻿using DAL.Models.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,11 +25,12 @@ namespace DAL.Models
 
         [Required]
         public DateTime DataCadastro { get; set; }
+        
 
         [ForeignKey("Usuario")]
         public string Fk_Usuario { get; set; }
         public virtual Usuario Usuario { get; set; }
 
-        public virtual List<AnaliseDados> Dados { get;set; }
+        public virtual List<AnaliseLinha> Linhas { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class AnaliseDados : Entity
+    public class AnaliseLinhaDados : Entity
     {
 
         [Required]
@@ -16,8 +16,8 @@ namespace DAL.Models
         [Required]
         public DateTime DataCriacao {  get; set; }
 
-        [ForeignKey("Analise")]
-        public int Fk_Analise { get; set; }
-        public virtual Analise Analise { get; set; }
+        [ForeignKey("AnaliseLinha")]
+        public int Fk_AnaliseLinha { get; set; }
+        public virtual AnaliseLinha AnaliseLinha { get; set; }
     }
 }

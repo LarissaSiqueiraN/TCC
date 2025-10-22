@@ -23,7 +23,7 @@ namespace DAL.DTOs
         public string? Fk_Usuario { get; set; }
 
         [Required]
-        public List<AnaliseDadosDto> Dados { get; set; }
+        public List<AnaliseLinhaDto> Linhas { get; set; }
     }
 
     public class AnaliseDto
@@ -33,10 +33,18 @@ namespace DAL.DTOs
         public string Descricao { get; set; }
         public string RotuloX { get; set; }
         public string RotuloY { get; set; }
-        public List<AnaliseDadosDto> Dados { get; set; }
+        public List<AnaliseLinhaDto> Linhas { get; set; }
     }
 
-    public class AnaliseDadosDto
+    public class AnaliseLinhaDto
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Cor { get; set; }
+        public List<AnaliseLinhaDadosDto> Dados { get; set; }
+    }
+
+    public class AnaliseLinhaDadosDto
     {
         public decimal ValorY { get; set; }
         public decimal ValorX { get; set; }

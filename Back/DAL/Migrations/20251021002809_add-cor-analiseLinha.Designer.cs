@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(BancoAPIContext))]
-    [Migration("20251016011433_inicializacao")]
-    partial class inicializacao
+    [Migration("20251021002809_add-cor-analiseLinha")]
+    partial class addcoranaliseLinha
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,110 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("DAL.Models.Analise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Fk_Usuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("RotuloX")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("RotuloY")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fk_Usuario");
+
+                    b.ToTable("Analises");
+                });
+
+            modelBuilder.Entity("DAL.Models.AnaliseLinha", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Cor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("Fk_Analise")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fk_Analise");
+
+                    b.ToTable("AnaliseLinhas");
+                });
+
+            modelBuilder.Entity("DAL.Models.AnaliseLinhaDados", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DataCriacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("Fk_AnaliseLinha")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ValorX")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ValorY")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fk_AnaliseLinha");
+
+                    b.ToTable("AnaliseLinhaDados");
+                });
 
             modelBuilder.Entity("DAL.Models.Usuario", b =>
                 {
@@ -244,6 +348,39 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DAL.Models.Analise", b =>
+                {
+                    b.HasOne("DAL.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("Fk_Usuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("DAL.Models.AnaliseLinha", b =>
+                {
+                    b.HasOne("DAL.Models.Analise", "Analise")
+                        .WithMany("Linhas")
+                        .HasForeignKey("Fk_Analise")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Analise");
+                });
+
+            modelBuilder.Entity("DAL.Models.AnaliseLinhaDados", b =>
+                {
+                    b.HasOne("DAL.Models.AnaliseLinha", "AnaliseLinha")
+                        .WithMany("Dados")
+                        .HasForeignKey("Fk_AnaliseLinha")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnaliseLinha");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -293,6 +430,16 @@ namespace DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.Analise", b =>
+                {
+                    b.Navigation("Linhas");
+                });
+
+            modelBuilder.Entity("DAL.Models.AnaliseLinha", b =>
+                {
+                    b.Navigation("Dados");
                 });
 #pragma warning restore 612, 618
         }
